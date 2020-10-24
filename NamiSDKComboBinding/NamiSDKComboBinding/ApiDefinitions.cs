@@ -396,7 +396,7 @@ namespace Binding
 
 	// @interface NamiPaywallManager : NSObject
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami18NamiPaywallManager")]
-	[DisableDefaultCtor]
+	//[DisableDefaultCtor]
 	interface NamiPaywallManager
 	{
 	}
