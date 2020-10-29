@@ -7,7 +7,7 @@ namespace Xamarin_iOS_BasicSample
 {
     public partial class MainViewController : UIViewController
     {
-        public MainViewController() : base("MainViewController", null)
+        public MainViewController() 
         {
         }
 
@@ -20,6 +20,8 @@ namespace Xamarin_iOS_BasicSample
         }
 
         private void BuildUI() {
+
+            this.View.BackgroundColor = UIColor.White;
 
             var titleView = new UIImageView(UIImage.FromBundle("nami_logo_white"))
             {
@@ -71,7 +73,7 @@ namespace Xamarin_iOS_BasicSample
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
 
-            scroll.AddSubview(new UILabel(new CGRect(10, 50, View.Frame.Width, 150))
+            scroll.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width, 150))
             {
                 Text = "This application demonstrates common calls used in a Nami enabled application.",
                 Font = UIFont.SystemFontOfSize(18),
@@ -81,6 +83,7 @@ namespace Xamarin_iOS_BasicSample
                 Lines = 0
             });
 
+            
             scroll.AddSubview(new UILabel(new CGRect(10, 250, View.Frame.Width, 50))
             {
                 Text = "Instructions",
@@ -88,8 +91,8 @@ namespace Xamarin_iOS_BasicSample
                 TextAlignment = UITextAlignment.Left,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
-
-            scroll.AddSubview(new UILabel(new CGRect(10, 150, View.Frame.Width, 150))
+            
+            scroll.AddSubview(new UILabel(new CGRect(10, 260, View.Frame.Width, 150))
             {
                 Text = "If you suspend and resume this app three times in the simulator, an example paywall will be raised - or you can use the Subscribe button below to raise the same paywall.",
                 Font = UIFont.SystemFontOfSize(18),
@@ -98,7 +101,7 @@ namespace Xamarin_iOS_BasicSample
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
             });
-
+            
             scroll.AddSubview(new UILabel(new CGRect(10, 400, View.Frame.Width, 50))
             {
                 Text = "Important Info",
@@ -106,8 +109,8 @@ namespace Xamarin_iOS_BasicSample
                 TextAlignment = UITextAlignment.Left,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
-
-            scroll.AddSubview(new UILabel(new CGRect(10, 270, View.Frame.Width, 150))
+            
+            scroll.AddSubview(new UILabel(new CGRect(10, 450, View.Frame.Width, 150))
             {
                 Text = "Any Purchase will be remembered while the application is Active, Suspended, Resume, but cleared when the Application is launched.  \nExamine the application source code for more details on calls used to respond and monitor purchases.",
                 Font = UIFont.SystemFontOfSize(18),
@@ -116,7 +119,7 @@ namespace Xamarin_iOS_BasicSample
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
             });
-
+            
             scroll.AddSubview(new UILabel(new CGRect(10, 600, View.Frame.Width, 50))
             {
                 Text = "Subscription is: Inactive",
