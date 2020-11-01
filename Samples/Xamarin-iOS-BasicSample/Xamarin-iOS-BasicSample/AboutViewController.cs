@@ -1,15 +1,27 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
+using Binding;
 
 namespace Xamarin_iOS_BasicSample
 {
     public class AboutViewController : UIViewController
     {
+        NamiMLManager nami;
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            NamiMLManager_Nami_Swift_1607.EnterCoreContentWithLabel(nami, "About");
+        }
+
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
 
+            //  nami = new NamiMLManager();
+            
             this.Title = "About";
             this.View.BackgroundColor = UIColor.White;
 
@@ -31,6 +43,12 @@ namespace Xamarin_iOS_BasicSample
                 Lines = 0
             });
         }
-        
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+
+            NamiMLManager_Nami_Swift_1607.ExitCoreContentWithLabel(nami, "About");
+        }
     }
 }
