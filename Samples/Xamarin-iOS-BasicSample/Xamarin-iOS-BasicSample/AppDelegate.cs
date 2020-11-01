@@ -9,6 +9,8 @@ namespace Xamarin_iOS_BasicSample
     [Register("AppDelegate")]
     public class AppDelegate : UIResponder, IUIApplicationDelegate
     {
+        Nami nami;
+        const string TEST_EXTERNAL_IDENTIFIER = "9a9999a9-99aa-99a9-aa99-999a999999a9";
 
         [Export("window")]
         public UIWindow Window { get; set; }
@@ -43,12 +45,23 @@ namespace Xamarin_iOS_BasicSample
             // This is the appID for a Nami test application with already configured products and paywalls, contact Nami to obtain an Application ID for your own application.
             var namiConfig = NamiConfiguration.ConfigurationForAppPlatformID("002e2c49-7f66-4d22-a05c-1dc9f2b7f2af");
             namiConfig.LogLevel = NamiLogLevel.Warn;
-            var nami = Nami.Shared;
+            nami = Nami.Shared;
             Nami_Nami_Swift_1345.ConfigureWithNamiConfig(nami, namiConfig);
 
 
 
-            NamiPaywallManager_Nami_Swift_1660.RegisterWithApplicationSignInProvider(new NamiPaywallManager(),applicationSignInProvider: (viewController,message,paywall) => { });
+            NamiPaywallManager_Nami_Swift_1660.RegisterWithApplicationSignInProvider(new NamiPaywallManager(),applicationSignInProvider: (viewController,message,paywall) => {
+                var okAlertController = UIAlertController.Create("Sign In", message, UIAlertControllerStyle.Alert);
+
+                //Add Action
+                okAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+
+                // Present Alert
+                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okAlertController, true, null);
+
+                nami.SetExternalIdentifierWithExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
+            });
+            var s = new string("");
             NamiPaywallManager_Nami_Swift_1660.RegisterApplicationAutoRaisePaywallBlocker(null, () => { return true; });
             
             //NamiPaywallManager.register {

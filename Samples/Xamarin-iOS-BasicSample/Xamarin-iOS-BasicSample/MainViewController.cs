@@ -2,6 +2,8 @@
 using CoreGraphics;
 using UIKit;
 using Binding;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Xamarin_iOS_BasicSample
 {
@@ -131,7 +133,98 @@ namespace Xamarin_iOS_BasicSample
             scroll.AddSubview(subscribeButton);
             
             this.View.AddSubview(scroll);
+
+            NamiEntitlementManager_Nami_Swift_1494.RegisterChangeHandlerWithEntitlementsChangedHandler(new NamiEntitlementManager(), (entitlements) =>
+            {
+                Console.WriteLine("Entitlements Change Listener triggered");
+
+                var ent = new List<NamiEntitlement>();
+
+                foreach (var n in entitlements)
+                {
+                    ent.Add(n);
+                }
+
+                LogActiveEntitlements(ent);
+
+                HandleActiveEntitlements(ent);
+            });
+
+            NamiPurchaseManager.RegisterWithPurchasesChangedHandler((purchases, state, error) => {
+
+                var pur = new List<NamiPurchase>();
+
+                foreach (var n in purchases)
+                {
+                    pur.Add(n);
+                }
+
+                EvaluateLastPurchaseEvent(pur, state, error.ToString());
+            });
+
+            HandleActiveEntitlements(NamiEntitlementManager_Nami_Swift_1494.ActiveEntitlements(new NamiEntitlementManager()).ToList());
             
+            LogCustomerJourneyState();
+        }
+
+        private void EvaluateLastPurchaseEvent(List<NamiPurchase> activePurchases, NamiPurchaseState namiPurchaseState,string errorMsg)
+        {
+
+            Console.WriteLine($"Purchase State {namiPurchaseState}");
+
+            if (namiPurchaseState == NamiPurchaseState.Purchased)
+            {
+                Console.WriteLine("Active Purchases: ");
+                foreach (var pur in activePurchases)
+                {
+                    Console.WriteLine($"SkuId: {pur.SkuID()}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Reason : {errorMsg}");
+            }
+            
+        }
+
+        private void HandleActiveEntitlements(List<NamiEntitlement> activeEntitlements)
+        {
+            /*
+            var isActive = false
+        var textResId = R.string.subscription_status_inactivate
+        if (activeEntitlements.isNotEmpty())
+            {
+                isActive = true
+            textResId = R.string.subscription_status_active
+        }
+            binding.subscriptionStatus.apply {
+                text = getText(textResId)
+                isEnabled = isActive
+            }
+            */
+        }
+
+        private void LogCustomerJourneyState()
+        {
+            var state = NamiCustomerManager_Nami_Swift_1457.CurrentCustomerJourneyState;
+
+            Console.WriteLine("currentCustomerJourneyState");
+
+            Console.WriteLine($"    formerSubscriber ==> ${state.FormerSubscriber()}");
+            Console.WriteLine($"    inGracePeriod ==> ${state.InGracePeriod()}");
+            Console.WriteLine($"    inIntroOfferPeriod ==> ${state.InIntroOfferPeriod()}");
+            Console.WriteLine($"    inTrialPeriod ==> ${state.InTrialPeriod()}");
+            
+        }
+
+        private void LogActiveEntitlements(List<NamiEntitlement> activeEntitlements)
+        {
+            Console.WriteLine("Active entitlements");
+
+            foreach (var ent in activeEntitlements)
+            {
+                Console.WriteLine($"\tName: {ent.Name}\tReferenceId: {ent.ReferenceID}");
+            }
         }
 
         private void OnSubscribeClicked(object sender, EventArgs e)
