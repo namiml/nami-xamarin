@@ -13,7 +13,7 @@ namespace Xamarin_iOS_BasicSample
         {
             base.ViewWillAppear(animated);
 
-            NamiMLManager_Nami_Swift_1607.EnterCoreContentWithLabel(nami, "About");
+            NamiMLManagerShared.EnterCoreContentWithLabel(nami, "About");
         }
 
         public override void ViewDidLoad()
@@ -47,7 +47,7 @@ namespace Xamarin_iOS_BasicSample
         {
             base.ViewWillDisappear(animated);
 
-            NamiMLManager_Nami_Swift_1607.ExitCoreContentWithLabel(nami, "About");
+            NamiMLManagerShared.ExitCoreContentWithLabel(nami, "About");
         }
     }
 }

@@ -45,7 +45,7 @@ namespace NamiML
     // @interface Nami_Swift_1345 (Nami)
     [Category]
     [BaseType(typeof(Nami))]
-    interface Nami_Nami_Swift_1345
+    interface NamiShared	
     {
         // +(void)configureWithNamiConfig:(NamiConfiguration * _Nonnull)namiConfig;
         [Static]
@@ -159,7 +159,7 @@ namespace NamiML
 	// @interface Nami_Swift_1457 (NamiCustomerManager)
 	[Category]
 	[BaseType (typeof(NamiCustomerManager))]
-	interface NamiCustomerManager_Nami_Swift_1457
+	interface NamiCustomerManagerShared
 	{
 		// +(CustomerJourneyState * _Nullable)currentCustomerJourneyState __attribute__((warn_unused_result("")));
 		[Static]
@@ -213,7 +213,7 @@ namespace NamiML
 	// @interface Nami_Swift_1494 (NamiEntitlementManager)
 	[Category]
 	[BaseType (typeof(NamiEntitlementManager))]
-	interface NamiEntitlementManager_Nami_Swift_1494
+	interface NamiEntitlementManagerShared
 	{
 		// +(NSArray<NamiEntitlement *> * _Nonnull)getEntitlements __attribute__((warn_unused_result("")));
 		[Static]
@@ -336,7 +336,7 @@ namespace NamiML
 	// @interface Nami_Swift_1607 (NamiMLManager)
 	[Category]
 	[BaseType (typeof(NamiMLManager))]
-	interface NamiMLManager_Nami_Swift_1607
+	interface NamiMLManagerShared
 	{
 		// +(void)enterCoreContentWithLabels:(NSArray<NSString *> * _Nonnull)labels;
 		[Static]
@@ -404,7 +404,7 @@ namespace NamiML
 	// @interface Nami_Swift_1660 (NamiPaywallManager)
 	[Category]
 	[BaseType (typeof(NamiPaywallManager))]
-	interface NamiPaywallManager_Nami_Swift_1660
+	interface NamiPaywallManagerShared
 	{
 		// +(void)paywallImpressionWithDeveloperID:(NSString * _Nonnull)developerID;
 		[Static]
@@ -739,7 +739,7 @@ namespace NamiML
 	// @interface Nami_Swift_2004 (SKProduct)
 	[Category]
 	[BaseType (typeof(SKProduct))]
-	interface SKProduct_Nami_Swift_2004
+	interface SKProductInstance
 	{
 		// -(NSDictionary<NSString *,id> * _Nonnull)namiInfoDict __attribute__((warn_unused_result("")));
 		[Export("namiInfoDict")]
@@ -753,7 +753,7 @@ namespace NamiML
 	// @interface Nami_Swift_2012 (SKProduct)
 	[Category]
 	[BaseType (typeof(SKProduct))]
-	interface SKProduct_Nami_Swift_2012
+	interface SKProductShared
 	{
 		// @property (nonatomic, strong, class) NSNumberFormatter * _Nonnull priceFormatter;
 		[Static]
