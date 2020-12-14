@@ -68,7 +68,6 @@ namespace Xamarin_iOS_BasicSample
             //            (fromVC, developerPaywallID, paywallMetadata) in
             // Present any sign in UI from here to validate the user has an account already in your system.
         }
-
-}
+    }
 }
 
