@@ -6,7 +6,7 @@ using ObjCRuntime;
 using StoreKit;
 using UIKit;
 
-namespace Binding
+namespace NamiML
 {
 	// @interface CustomerJourneyState : NSObject <NSCoding>
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami20CustomerJourneyState")]

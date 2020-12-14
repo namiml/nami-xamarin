@@ -1,7 +1,7 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
-using Binding;
+using NamiML;
 
 namespace Xamarin_iOS_BasicSample
 {
