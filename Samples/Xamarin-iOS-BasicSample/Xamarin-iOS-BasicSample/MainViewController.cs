@@ -160,7 +160,7 @@ namespace Xamarin_iOS_BasicSample
                     pur.Add(n);
                 }
 
-                EvaluateLastPurchaseEvent(pur, state, error.ToString());
+                EvaluateLastPurchaseEvent(pur, state, error?.ToString());
             });
 
             HandleActiveEntitlements(NamiEntitlementManager_Nami_Swift_1494.ActiveEntitlements(new NamiEntitlementManager()).ToList());
