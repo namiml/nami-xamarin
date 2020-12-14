@@ -9,6 +9,9 @@ namespace Xamarin_iOS_BasicSample
 {
     public partial class MainViewController : UIViewController
     {
+        UILabel subscriptionStatusLabel;
+        UIScrollView scrollView;
+
         public MainViewController() 
         {
         }
@@ -19,6 +22,11 @@ namespace Xamarin_iOS_BasicSample
             // Perform any additional setup after loading the view, typically from a nib.
 
             BuildUI();
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            LogCustomerJourneyState();
         }
 
         private void BuildUI()
@@ -52,11 +60,11 @@ namespace Xamarin_iOS_BasicSample
             aboutButton.TouchDown += OnAboutClicked;
 
             
-            var scroll = new UIScrollView(new CGRect(0, 0, View.Frame.Width, View.Frame.Height));
-            scroll.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
-            scroll.ContentSize = new CGSize(View.Frame.Width, 760);
+            scrollView = new UIScrollView(new CGRect(0, 0, View.Frame.Width, View.Frame.Height));
+            scrollView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
+            scrollView.ContentSize = new CGSize(View.Frame.Width, 760);
 
-            scroll.AddSubview(new UILabel(new CGRect(0, 0, View.Frame.Width, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(0, 0, View.Frame.Width, 50))
             {
                 Text = "BasicLinked",
                 Font = UIFont.BoldSystemFontOfSize(36),
@@ -64,9 +72,9 @@ namespace Xamarin_iOS_BasicSample
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
 
-            scroll.AddSubview(aboutButton);
+            scrollView.AddSubview(aboutButton);
 
-            scroll.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width, 50))
             {
                 Text = "Introduction",
                 Font = UIFont.BoldSystemFontOfSize(24),
@@ -74,7 +82,7 @@ namespace Xamarin_iOS_BasicSample
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
 
-            scroll.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width - 20, 150))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width - 20, 150))
             {
                 Text = "This application demonstrates common calls used in a Nami enabled application.",
                 Font = UIFont.SystemFontOfSize(18),
@@ -85,7 +93,7 @@ namespace Xamarin_iOS_BasicSample
             });
 
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 250, View.Frame.Width - 20, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 250, View.Frame.Width - 20, 50))
             {
                 Text = "Instructions",
                 Font = UIFont.BoldSystemFontOfSize(24),
@@ -93,7 +101,7 @@ namespace Xamarin_iOS_BasicSample
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 260, View.Frame.Width - 20, 150))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 260, View.Frame.Width - 20, 150))
             {
                 Text = "If you suspend and resume this app three times in the simulator, an example paywall will be raised - or you can use the Subscribe button below to raise the same paywall.",
                 Font = UIFont.SystemFontOfSize(18),
@@ -103,7 +111,7 @@ namespace Xamarin_iOS_BasicSample
                 Lines = 0
             });
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 400, View.Frame.Width - 20, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 400, View.Frame.Width - 20, 50))
             {
                 Text = "Important Info",
                 Font = UIFont.BoldSystemFontOfSize(24),
@@ -111,7 +119,7 @@ namespace Xamarin_iOS_BasicSample
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 450, View.Frame.Width - 20, 150))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 450, View.Frame.Width - 20, 150))
             {
                 Text = "Any Purchase will be remembered while the application is Active, Suspended, Resume, but cleared when the Application is launched.  \nExamine the application source code for more details on calls used to respond and monitor purchases.",
                 Font = UIFont.SystemFontOfSize(18),
@@ -120,18 +128,19 @@ namespace Xamarin_iOS_BasicSample
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
             });
-            
-            scroll.AddSubview(new UILabel(new CGRect(10, 600, View.Frame.Width - 20, 50))
+
+            subscriptionStatusLabel = new UILabel(new CGRect(10, 600, View.Frame.Width - 20, 50))
             {
                 Text = "Subscription is: Inactive",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
-            });
+            };
+            scrollView.AddSubview(subscriptionStatusLabel);
 
-            scroll.AddSubview(subscribeButton);
+            scrollView.AddSubview(subscribeButton);
             
-            this.View.AddSubview(scroll);
+            this.View.AddSubview(scrollView);
 
             NamiEntitlementManagerShared.RegisterChangeHandlerWithEntitlementsChangedHandler(new NamiEntitlementManager(), (entitlements) =>
             {
@@ -162,8 +171,6 @@ namespace Xamarin_iOS_BasicSample
             });
 
             HandleActiveEntitlements(NamiEntitlementManagerShared.ActiveEntitlements(new NamiEntitlementManager()).ToList());
-            
-            LogCustomerJourneyState();
         }
 
         private void EvaluateLastPurchaseEvent(List<NamiPurchase> activePurchases, NamiPurchaseState namiPurchaseState,string errorMsg)
@@ -182,25 +189,15 @@ namespace Xamarin_iOS_BasicSample
             else
             {
                 Console.WriteLine($"Reason : {errorMsg}");
-            }
-            
+            }            
         }
 
         private void HandleActiveEntitlements(List<NamiEntitlement> activeEntitlements)
         {
-            /*
-            var isActive = false
-        var textResId = R.string.subscription_status_inactivate
-        if (activeEntitlements.isNotEmpty())
+            if (activeEntitlements?.Count > 0)
             {
-                isActive = true
-            textResId = R.string.subscription_status_active
-        }
-            binding.subscriptionStatus.apply {
-                text = getText(textResId)
-                isEnabled = isActive
+                subscriptionStatusLabel.Text = "Subscription is: Active";
             }
-            */
         }
 
         private void LogCustomerJourneyState()
@@ -212,8 +209,7 @@ namespace Xamarin_iOS_BasicSample
             Console.WriteLine($"    formerSubscriber ==> ${state.FormerSubscriber()}");
             Console.WriteLine($"    inGracePeriod ==> ${state.InGracePeriod()}");
             Console.WriteLine($"    inIntroOfferPeriod ==> ${state.InIntroOfferPeriod()}");
-            Console.WriteLine($"    inTrialPeriod ==> ${state.InTrialPeriod()}");
-            
+            Console.WriteLine($"    inTrialPeriod ==> ${state.InTrialPeriod()}");            
         }
 
         private void LogActiveEntitlements(List<NamiEntitlement> activeEntitlements)

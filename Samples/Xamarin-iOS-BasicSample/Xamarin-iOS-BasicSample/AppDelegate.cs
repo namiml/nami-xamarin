@@ -44,6 +44,7 @@ namespace Xamarin_iOS_BasicSample
 
             // This is the appID for a Nami test application with already configured products and paywalls, contact Nami to obtain an Application ID for your own application.
             var namiConfig = NamiConfiguration.ConfigurationForAppPlatformID("002e2c49-7f66-4d22-a05c-1dc9f2b7f2af");
+            namiConfig.BypassStore = true;
             namiConfig.LogLevel = NamiLogLevel.Warn;
             nami = Nami.Shared;
             NamiShared.ConfigureWithNamiConfig(nami, namiConfig);
