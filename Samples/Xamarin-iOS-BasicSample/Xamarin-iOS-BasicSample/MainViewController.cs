@@ -21,10 +21,8 @@ namespace Xamarin_iOS_BasicSample
             BuildUI();
         }
 
-        private void BuildUI() {
-
-            this.View.BackgroundColor = UIColor.White;
-
+        private void BuildUI()
+        {
             var titleView = new UIImageView(UIImage.FromBundle("nami_logo_white"))
             {
                 BackgroundColor = new UIColor(red: 0.25f, green: 0.43f, blue: 0.49f, alpha: 1.00f),

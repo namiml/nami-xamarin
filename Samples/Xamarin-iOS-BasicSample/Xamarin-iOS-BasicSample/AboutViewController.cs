@@ -23,7 +23,6 @@ namespace Xamarin_iOS_BasicSample
             //  nami = new NamiMLManager();
             
             this.Title = "About";
-            this.View.BackgroundColor = UIColor.White;
 
             this.View.AddSubview(new UILabel(new CGRect(10, 100, View.Frame.Width, 50))
             {
