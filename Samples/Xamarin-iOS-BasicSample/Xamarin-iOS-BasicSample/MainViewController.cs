@@ -55,7 +55,8 @@ namespace Xamarin_iOS_BasicSample
 
             
             var scroll = new UIScrollView(new CGRect(0, 0, View.Frame.Width, View.Frame.Height));
-            scroll.AutoresizingMask = UIViewAutoresizing.All;
+            scroll.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
+            scroll.ContentSize = new CGSize(View.Frame.Width, 760);
 
             scroll.AddSubview(new UILabel(new CGRect(0, 0, View.Frame.Width, 50))
             {
