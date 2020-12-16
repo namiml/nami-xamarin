@@ -7,20 +7,16 @@ namespace Xamarin_iOS_BasicSample
 {
     public class AboutViewController : UIViewController
     {
-        NamiMLManager nami;
-
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
-            NamiMLManagerShared.EnterCoreContentWithLabel(nami, "About");
+            NamiMLManager.EnterCoreContentWithLabel("About");
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            //  nami = new NamiMLManager();
             
             this.Title = "About";
 
@@ -47,7 +43,7 @@ namespace Xamarin_iOS_BasicSample
         {
             base.ViewWillDisappear(animated);
 
-            NamiMLManagerShared.ExitCoreContentWithLabel(nami, "About");
+            NamiMLManager.ExitCoreContentWithLabel("About");
         }
     }
 }

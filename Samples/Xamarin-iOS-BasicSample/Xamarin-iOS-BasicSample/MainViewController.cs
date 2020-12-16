@@ -147,7 +147,7 @@ namespace Xamarin_iOS_BasicSample
             
             this.View.AddSubview(scrollView);
 
-            NamiEntitlementManagerShared.RegisterChangeHandlerWithEntitlementsChangedHandler(new NamiEntitlementManager(), (entitlements) =>
+            NamiEntitlementManager.RegisterChangeHandlerWithEntitlementsChangedHandler((entitlements) =>
             {
                 Console.WriteLine("Entitlements Change Listener triggered");
 
@@ -175,7 +175,7 @@ namespace Xamarin_iOS_BasicSample
                 EvaluateLastPurchaseEvent(pur, state, error?.ToString());
             });
 
-            HandleActiveEntitlements(NamiEntitlementManagerShared.ActiveEntitlements(new NamiEntitlementManager()).ToList());
+            HandleActiveEntitlements(NamiEntitlementManager.ActiveEntitlements().ToList());
         }
 
         private void EvaluateLastPurchaseEvent(List<NamiPurchase> activePurchases, NamiPurchaseState namiPurchaseState,string errorMsg)
@@ -207,7 +207,7 @@ namespace Xamarin_iOS_BasicSample
 
         private void LogCustomerJourneyState()
         {
-            var state = NamiCustomerManagerShared.CurrentCustomerJourneyState;
+            var state = NamiCustomerManager.CurrentCustomerJourneyState;
 
             Console.WriteLine("currentCustomerJourneyState");
 
@@ -229,9 +229,9 @@ namespace Xamarin_iOS_BasicSample
 
         private void OnSubscribeClicked(object sender, EventArgs e)
         {
-            if (NamiPaywallManagerShared.CanRaisePaywall)
+            if (NamiPaywallManager.CanRaisePaywall)
             {
-                NamiPaywallManagerShared.RaisePaywallFromVC(new NamiPaywallManager(),this);
+                NamiPaywallManager.RaisePaywallFromVC(this);
             }
         }
 

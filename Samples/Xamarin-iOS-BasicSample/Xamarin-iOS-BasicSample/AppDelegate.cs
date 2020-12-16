@@ -46,10 +46,9 @@ namespace Xamarin_iOS_BasicSample
             namiConfig.BypassStore = true;
 
             namiConfig.LogLevel = NamiLogLevel.Warn;
-            nami = Nami.Shared;
-            NamiShared.ConfigureWithNamiConfig(nami, namiConfig);
+            Nami.ConfigureWithNamiConfig(namiConfig);
 
-            NamiPaywallManagerShared.RegisterWithApplicationSignInProvider(new NamiPaywallManager(),applicationSignInProvider: (viewController,message,paywall) => {
+            NamiPaywallManager.RegisterWithApplicationSignInProvider(applicationSignInProvider: (viewController,message,paywall) => {
                 var okAlertController = UIAlertController.Create("Sign In", message, UIAlertControllerStyle.Alert);
 
                 //Add Action
@@ -58,10 +57,10 @@ namespace Xamarin_iOS_BasicSample
                 // Present Alert
                 UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okAlertController, true, null);
 
-                nami.SetExternalIdentifierWithExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
+                Nami.SetExternalIdentifierWithExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
             });
 
-            NamiPaywallManagerShared.RegisterApplicationAutoRaisePaywallBlocker(null, () => { return true; });
+            NamiPaywallManager.RegisterApplicationAutoRaisePaywallBlocker(() => { return true; });
         }
     }
 }
