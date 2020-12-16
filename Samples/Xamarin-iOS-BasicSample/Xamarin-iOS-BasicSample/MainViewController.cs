@@ -211,10 +211,10 @@ namespace Xamarin_iOS_BasicSample
 
             Console.WriteLine("currentCustomerJourneyState");
 
-            Console.WriteLine($"    formerSubscriber ==> ${state.FormerSubscriber()}");
-            Console.WriteLine($"    inGracePeriod ==> ${state.InGracePeriod()}");
-            Console.WriteLine($"    inIntroOfferPeriod ==> ${state.InIntroOfferPeriod()}");
-            Console.WriteLine($"    inTrialPeriod ==> ${state.InTrialPeriod()}");            
+            Console.WriteLine($"    formerSubscriber ==> ${state?.FormerSubscriber()}");
+            Console.WriteLine($"    inGracePeriod ==> ${state?.InGracePeriod()}");
+            Console.WriteLine($"    inIntroOfferPeriod ==> ${state?.InIntroOfferPeriod()}");
+            Console.WriteLine($"    inTrialPeriod ==> ${state?.InTrialPeriod()}");            
         }
 
         private void LogActiveEntitlements(List<NamiEntitlement> activeEntitlements)
