@@ -42,6 +42,11 @@ namespace Xamarin_iOS_BasicSample
             nfloat h = 31.0f;
             nfloat w = View.Bounds.Width;
 
+            if (TraitCollection.UserInterfaceStyle == UIUserInterfaceStyle.Light)
+            {
+                View.BackgroundColor = UIColor.White;
+            }
+
             var aboutButton = UIButton.FromType(UIButtonType.RoundedRect);
             aboutButton.Frame = new CGRect(10, 50, w - 20, 44);
             aboutButton.SetTitle("About", UIControlState.Normal);
