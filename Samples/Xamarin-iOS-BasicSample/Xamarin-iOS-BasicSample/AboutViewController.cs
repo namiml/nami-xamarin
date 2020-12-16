@@ -20,6 +20,11 @@ namespace Xamarin_iOS_BasicSample
             
             this.Title = "About";
 
+            if (TraitCollection.UserInterfaceStyle == UIUserInterfaceStyle.Light)
+            {
+                View.BackgroundColor = UIColor.White;
+            }
+
             this.View.AddSubview(new UILabel(new CGRect(10, 100, View.Frame.Width, 50))
             {
                 Text = "Introduction",
