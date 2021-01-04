@@ -36,11 +36,6 @@ namespace NamiML
     [DisableDefaultCtor]
     interface Nami
     {
-        // @property (readonly, nonatomic, strong, class) Nami * _Nonnull shared;
-        [Static]
-        [Export("shared", ArgumentSemantic.Strong)]
-        Nami Shared { get; }
-
 		// +(void)configureWithNamiConfig:(NamiConfiguration * _Nonnull)namiConfig;
 		[Static]
 		[Export("configureWithNamiConfig:")]
@@ -444,9 +439,9 @@ namespace NamiML
 		[Export ("purchaseInitiatedTimestamp", ArgumentSemantic.Copy)]
 		NSDate PurchaseInitiatedTimestamp { get; set; }
 
-		// @property (copy, nonatomic) NSDate * _Nullable exipres;
-		[NullAllowed, Export ("exipres", ArgumentSemantic.Copy)]
-		NSDate Exipres { get; set; }
+		// @property (copy, nonatomic) NSDate * _Nullable expires;
+		[NullAllowed, Export ("expires", ArgumentSemantic.Copy)]
+		NSDate Expires { get; set; }
 
         // @property (nonatomic) enum NamiPurchaseSource purchaseSource;
         [Export("purchaseSource", ArgumentSemantic.Assign)]
@@ -474,6 +469,11 @@ namespace NamiML
         [Static]
 		[Export ("clearBypassStorePurchases")]
 		void ClearBypassStorePurchases ();
+
+		// +(void)clearAndCheckRestoreAllPurchases;
+		[Static]
+		[Export("clearAndCheckRestoreAllPurchases")]
+		void ClearAndCheckRestoreAllPurchases();
 
 		// +(BOOL)isSKUIDPurchased:(NSString * _Nonnull)skuID __attribute__((warn_unused_result("")));
 		[Static]
@@ -515,6 +515,11 @@ namespace NamiML
 		[Static]
 		[Export ("consumePurchasedSKUWithSkuID:")]
 		void ConsumePurchasedSKUWithSkuID (string skuID);
+
+		// +(void)presentCodeRedemptionSheet;
+		[Static]
+		[Export("presentCodeRedemptionSheet")]
+		void PresentCodeRedemptionSheet();
 	}
 
 	// @interface NamiReceiptIAPWrapper : NSObject
