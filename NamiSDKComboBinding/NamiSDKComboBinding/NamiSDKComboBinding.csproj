@@ -9,8 +9,20 @@
     <OutputType>Library</OutputType>
     <RootNamespace>NativeLibrary</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>NativeLibrary</AssemblyName>
+    <AssemblyName>NamiML.SDK</AssemblyName>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <PackOnBuild>true</PackOnBuild>
+    <PackageId>NamiML.SDK</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Sean Sparkman</Authors>
+    <Copyright>2020</Copyright>
+    <PackageIconUrl>https://docs.namiml.com/</PackageIconUrl>
+    <PackageLicenseUrl>https://files.readme.io/c8b32bd-small-Nami.Logotype.RGB.Ocean.png</PackageLicenseUrl>
+    <Owners>Nami ML Inc.</Owners>
+    <PackageProjectUrl>https://docs.namiml.com/</PackageProjectUrl>
+    <Summary>Nami SDK iOS Binding Library</Summary>
+    <Title>Nami SDK iOS Binding Library</Title>
+    <Description>Nami iOS Binding Library</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,6 +60,13 @@
   </ItemGroup>
   <ItemGroup>
     <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NuGet.Build.Packaging">
+      <Version>0.2.2</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.ObjCBinding.CSharp.targets" />
 </Project>
