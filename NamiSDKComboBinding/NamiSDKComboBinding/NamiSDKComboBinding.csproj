@@ -13,16 +13,16 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>NamiML.SDK</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
-    <Authors>Sean Sparkman</Authors>
-    <Copyright>2020</Copyright>
-    <PackageIconUrl>https://docs.namiml.com/</PackageIconUrl>
-    <PackageLicenseUrl>https://files.readme.io/c8b32bd-small-Nami.Logotype.RGB.Ocean.png</PackageLicenseUrl>
+    <PackageVersion>0.1.0</PackageVersion>
+    <Authors>Nami ML</Authors>
+    <Copyright>2021</Copyright>
+    <PackageIconUrl>https://nami-brand.s3.amazonaws.com/images/Nami.SDK.2.0.120x137.png</PackageIconUrl>
+    <PackageLicenseUrl>https://github.com/namiml/nami-xamarin/blob/main/LICENSE</PackageLicenseUrl>
     <Owners>Nami ML Inc.</Owners>
-    <PackageProjectUrl>https://docs.namiml.com/</PackageProjectUrl>
-    <Summary>Nami SDK iOS Binding Library</Summary>
-    <Title>Nami SDK iOS Binding Library</Title>
-    <Description>Nami iOS Binding Library</Description>
+    <PackageProjectUrl>https://github.com/namiml/nami-xamarin</PackageProjectUrl>
+    <Summary>Nami SDK Xamarin iOS Binding Library</Summary>
+    <Title>Nami SDK Xamarin iOS Binding Library</Title>
+    <Description>Xamarin iOS Binding Library for Nami SDK. Subscription and In-App Purchases Marketing Platform. Create no-code purchase journies, subscription management and customer CRM, and analytics. Simple integration. Monetize your App.</Description>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
