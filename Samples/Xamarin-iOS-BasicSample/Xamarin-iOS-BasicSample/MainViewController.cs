@@ -42,23 +42,16 @@ namespace Xamarin_iOS_BasicSample
             nfloat h = 31.0f;
             nfloat w = View.Bounds.Width;
 
-            if (TraitCollection.UserInterfaceStyle == UIUserInterfaceStyle.Light)
-            {
-                View.BackgroundColor = UIColor.White;
-            }
+            View.BackgroundColor = UIColor.White;
 
             var aboutButton = UIButton.FromType(UIButtonType.RoundedRect);
             aboutButton.Frame = new CGRect(10, 50, w - 20, 44);
             aboutButton.SetTitle("About", UIControlState.Normal);
-            aboutButton.BackgroundColor = UIColor.White;
-            aboutButton.Layer.CornerRadius = 5f;
             aboutButton.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 
             var subscribeButton = UIButton.FromType(UIButtonType.RoundedRect);
             subscribeButton.Frame = new CGRect(10, 700, w - 20, 44);
             subscribeButton.SetTitle("Subscribe", UIControlState.Normal);
-            subscribeButton.BackgroundColor = UIColor.White;
-            subscribeButton.Layer.CornerRadius = 5f;
             subscribeButton.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 
             subscribeButton.TouchDown += OnSubscribeClicked;
@@ -84,6 +77,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "Introduction",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
 
@@ -92,6 +86,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "This application demonstrates common calls used in a Nami enabled application.",
                 Font = UIFont.SystemFontOfSize(18),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.All,
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
@@ -103,6 +98,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "Instructions",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
             
@@ -111,6 +107,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "If you suspend and resume this app three times in the simulator, an example paywall will be raised - or you can use the Subscribe button below to raise the same paywall.",
                 Font = UIFont.SystemFontOfSize(18),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.All,
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
@@ -121,6 +118,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "Important Info",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
             
@@ -129,6 +127,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "Any Purchase will be remembered while the application is Active, Suspended, Resume, but cleared when the Application is launched.  \nExamine the application source code for more details on calls used to respond and monitor purchases.",
                 Font = UIFont.SystemFontOfSize(18),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.All,
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
@@ -139,6 +138,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "Subscription is: Inactive",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             };
             scrollView.AddSubview(subscriptionStatusLabel);
