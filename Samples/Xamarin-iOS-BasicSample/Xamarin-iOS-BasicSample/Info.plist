@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Xamarin_iOS_BasicSample</string>
+	<string>Basic Demo</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.namiml.TestProducts</string>
 	<key>CFBundleShortVersionString</key>
