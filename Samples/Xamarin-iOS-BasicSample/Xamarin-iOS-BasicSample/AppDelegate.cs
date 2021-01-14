@@ -54,8 +54,8 @@ namespace Xamarin_iOS_BasicSample
                 //Add Action
                 okAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
 
-                // Present Alert
-                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okAlertController, true, null);
+                // Present Alert    
+                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentedViewController.PresentViewController(okAlertController, true, null);
 
                 Nami.SetExternalIdentifierWithExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
             });
