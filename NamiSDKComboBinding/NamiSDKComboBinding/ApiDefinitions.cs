@@ -54,12 +54,12 @@ namespace NamiML
 		// +(void)setExternalIdentifierWithExternalIdentifier:(NSString * _Nullable)externalIdentifier type:(enum NamiExternalIdentifierType)type;
 		[Static]
 		[Export("setExternalIdentifierWithExternalIdentifier:type:")]
-		void SetExternalIdentifierWithExternalIdentifier([NullAllowed] string externalIdentifier, NamiExternalIdentifierType type);
+		void SetExternalIdentifier([NullAllowed] string externalIdentifier, NamiExternalIdentifierType type);
 
 		// +(NSString * _Nullable)getExternalIdentifier __attribute__((warn_unused_result("")));
 		[Static]
 		[NullAllowed, Export("getExternalIdentifier")]
-		string ExternalIdentifier();
+		string GetExternalIdentifier();
 
 		// +(void)clearExternalIdentifier;
 		[Static]
@@ -186,14 +186,10 @@ namespace NamiML
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami22NamiEntitlementManager")]
 	interface NamiEntitlementManager
     {
-		 //-(void) registerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement*>* _Nonnull))changeHandler;
-		[Export("registerWithEntitlementsChangedHandler:")]
-        void RegisterWithEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
-
 		// +(NSArray<NamiEntitlement *> * _Nonnull)getEntitlements __attribute__((warn_unused_result("")));
 		[Static]
 		[Export("getEntitlements")]
-		NamiEntitlement[] Entitlements();
+		NamiEntitlement[] GetEntitlements();
 
 		// +(NSArray<NamiEntitlement *> * _Nonnull)activeEntitlements __attribute__((warn_unused_result("")));
 		[Static]
@@ -218,7 +214,7 @@ namespace NamiML
 		// +(void)registerChangeHandlerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
 		[Static]
 		[Export("registerChangeHandlerWithEntitlementsChangedHandler:")]
-		void RegisterChangeHandlerWithEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
+		void RegisterWithEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
 	}
 
 	// @interface NamiEntitlementSetter : NSObject
@@ -412,15 +408,10 @@ namespace NamiML
 		[Export("raisePaywallFromVC:")]
 		void RaisePaywallFromVC([NullAllowed] UIViewController fromVC);
 
-		// +(void)raisePaywallFromVC:(UIViewController * _Nullable)fromVC forNami:(BOOL)forNami;
-		[Static]
-		[Export("raisePaywallFromVC:forNami:")]
-		void RaisePaywallFromVC([NullAllowed] UIViewController fromVC, bool forNami);
-
 		// +(void)dismissNamiPaywallIfOpenWithAnimated:(BOOL)animated completion:(void (^ _Nonnull)(void))completion;
 		[Static]
 		[Export("dismissNamiPaywallIfOpenWithAnimated:completion:")]
-		void DismissNamiPaywallIfOpenWithAnimated(bool animated, Action completion);
+		void DismissNamiPaywallIfOpen(bool animated, Action completion);
 	}
 
 	// @interface NamiPurchase : NSObject
