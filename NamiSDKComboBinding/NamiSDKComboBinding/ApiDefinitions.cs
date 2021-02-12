@@ -345,6 +345,10 @@ namespace NamiML
 		[NullAllowed, Export ("backgroundImage", ArgumentSemantic.Strong)]
 		UIImage BackgroundImage { get; set; }
 
+		// @property (readonly, nonatomic, strong) PaywallStyleData * _Nonnull styleData;
+		[Export("styleData", ArgumentSemantic.Strong)]
+		PaywallStyleData StyleData { get; }
+
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull developerPaywallID;
 		[Export ("developerPaywallID")]
 		string DeveloperPaywallID { get; }
@@ -373,30 +377,30 @@ namespace NamiML
 		[Export("presentNamiPaywallFromVC:products:paywallMetadata:backgroundImage:forNami:")]
 		void PresentNamiPaywallFromVC([NullAllowed] UIViewController fromVC, [NullAllowed] NamiSKU[] products, NamiPaywall paywallMetadata, [NullAllowed] UIImage backgroundImage, bool forNami);
 
-		// +(void)registerApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker;
+		// +(void)registerAllowAutoRaisePaywallHandler:(BOOL (^ _Nullable)(void))allowAutoRaisePaywallHandler;
 		[Static]
-		[Export("registerApplicationAutoRaisePaywallBlocker:")]
-		void RegisterApplicationAutoRaisePaywallBlocker([NullAllowed] Func<bool> applicationAutoRaisePaywallBlocker);
+		[Export("registerAllowAutoRaisePaywallHandler:")]
+		void RegisterAllowAutoRaisePaywallHandler([NullAllowed] Func<bool> allowAutoRaisePaywallHandler);
 
 		//+(void) fetchCustomPaywallMetaForDeveloperID:(NSString* _Nonnull) developerPaywallID :(void (^ _Nonnull)(NSArray<NamiSKU*>* _Nullable, NSString* _Nonnull, NamiPaywall* _Nullable))namiCustomPaywallHandler;
 		[Static]
 		[Export("fetchCustomPaywallMetaForDeveloperID::")]
 		void FetchCustomPaywallMetaForDeveloperID(string developerPaywallID, Action<NSArray<NamiSKU>, NSString, NamiPaywall> namiCustomPaywallHandler);
 
-		// +(void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider;
+		// +(void)registerPaywallRaiseHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallHandler;
 		[Static]
-		[Export("registerWithApplicationPaywallProvider:")]
-		void RegisterWithApplicationPaywallProvider([NullAllowed] Action<UIViewController, NSArray<NamiSKU>, NSString, NamiPaywall> applicationPaywallProvider);
+		[Export("registerPaywallRaiseHandler:")]
+		void RegisterPaywallRaiseHandler([NullAllowed] Action<UIViewController, NSArray<NamiSKU>, NSString, NamiPaywall> applicationPaywallHandler);
 
-		// +(void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider;
+		// +(void)registerSignInHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInHandler;
 		[Static]
-		[Export("registerWithApplicationSignInProvider:")]
-		void RegisterWithApplicationSignInProvider([NullAllowed] Action<UIViewController, NSString, NamiPaywall> applicationSignInProvider);
+		[Export("registerSignInHandler:")]
+		void RegisterSignInHandler([NullAllowed] Action<UIViewController, NSString, NamiPaywall> applicationSignInHandler);
 
-		// +(void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler;
+		// +(void)registerBlockingPaywallClosedHandler:(void (^ _Nullable)(void))blockingPaywallClosedHandler;
 		[Static]
-		[Export("registerWithApplicationBlockingPaywallClosedHandler:")]
-		void RegisterWithApplicationBlockingPaywallClosedHandler([NullAllowed] Action applicationBlockingPaywallClosedHandler);
+		[Export("registerBlockingPaywallClosedHandler:")]
+		void RegisterBlockingPaywallClosedHandler([NullAllowed] Action blockingPaywallClosedHandler);		
 
 		// +(BOOL)canRaisePaywall __attribute__((warn_unused_result("")));
 		[Static]
@@ -407,6 +411,11 @@ namespace NamiML
 		[Static]
 		[Export("raisePaywallFromVC:")]
 		void RaisePaywallFromVC([NullAllowed] UIViewController fromVC);
+
+		// +(void)raisePaywallWithDeveloperPaywallID:(NSString * _Nonnull)developerPaywallID fromVC:(UIViewController * _Nullable)fromVC;
+		[Static]
+		[Export("raisePaywallWithDeveloperPaywallID:fromVC:")]
+		void RaisePaywallWithDeveloperPaywallID(string developerPaywallID, [NullAllowed] UIViewController fromVC);
 
 		// +(void)dismissNamiPaywallIfOpenWithAnimated:(BOOL)animated completion:(void (^ _Nonnull)(void))completion;
 		[Static]
@@ -693,10 +702,143 @@ namespace NamiML
 		[Static]
 		[Export ("NamiPaywallDidDismissAfterPurchaseNotification")]
 		string NamiPaywallDidDismissAfterPurchaseNotification { get; }
-	}	
+	}
 
-	// @interface Nami_Swift_2004 (SKProduct)
-	[Category]
+	// @interface PaywallStyleData : NSObject
+	[BaseType(typeof(NSObject), Name = "_TtC4Nami16PaywallStyleData")]
+	interface PaywallStyleData
+	{
+		// @property (nonatomic, strong) UIColor * _Nonnull backgroundColor;
+		[Export("backgroundColor", ArgumentSemantic.Strong)]
+	UIColor BackgroundColor { get; set; }
+
+	// @property (nonatomic) CGFloat bodyFontSize;
+	[Export("bodyFontSize")]
+	nfloat BodyFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull bodyTextColor;
+	[Export("bodyTextColor", ArgumentSemantic.Strong)]
+	UIColor BodyTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull bodyShadowColor;
+	[Export("bodyShadowColor", ArgumentSemantic.Strong)]
+	UIColor BodyShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat bodyShadowRadius;
+	[Export("bodyShadowRadius")]
+	nfloat BodyShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat titleFontSize;
+	[Export("titleFontSize")]
+	nfloat TitleFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull titleTextColor;
+	[Export("titleTextColor", ArgumentSemantic.Strong)]
+	UIColor TitleTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull titleShadowColor;
+	[Export("titleShadowColor", ArgumentSemantic.Strong)]
+	UIColor TitleShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat titleShadowRadius;
+	[Export("titleShadowRadius")]
+	nfloat TitleShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat closeButtonFontSize;
+	[Export("closeButtonFontSize")]
+	nfloat CloseButtonFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull closeButtonTextColor;
+	[Export("closeButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor CloseButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull closeButtonShadowColor;
+	[Export("closeButtonShadowColor", ArgumentSemantic.Strong)]
+	UIColor CloseButtonShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat closeButtonShadowRadius;
+	[Export("closeButtonShadowRadius")]
+	nfloat CloseButtonShadowRadius { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull bottomOverlayColor;
+	[Export("bottomOverlayColor", ArgumentSemantic.Strong)]
+	UIColor BottomOverlayColor { get; set; }
+
+	// @property (nonatomic) CGFloat bottomOverlayCornerRadius;
+	[Export("bottomOverlayCornerRadius")]
+	nfloat BottomOverlayCornerRadius { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull skuButtonColor;
+	[Export("skuButtonColor", ArgumentSemantic.Strong)]
+	UIColor SkuButtonColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull skuButtonTextColor;
+	[Export("skuButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor SkuButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull featuredSkusButtonColor;
+	[Export("featuredSkusButtonColor", ArgumentSemantic.Strong)]
+	UIColor FeaturedSkusButtonColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull featuredSkusButtonTextColor;
+	[Export("featuredSkusButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor FeaturedSkusButtonTextColor { get; set; }
+
+	// @property (nonatomic) CGFloat signinButtonFontSize;
+	[Export("signinButtonFontSize")]
+	nfloat SigninButtonFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull signinButtonTextColor;
+	[Export("signinButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor SigninButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull signinButtonShadowColor;
+	[Export("signinButtonShadowColor", ArgumentSemantic.Strong)]
+	UIColor SigninButtonShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat signinButtonShadowRadius;
+	[Export("signinButtonShadowRadius")]
+	nfloat SigninButtonShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat restoreButtonFontSize;
+	[Export("restoreButtonFontSize")]
+	nfloat RestoreButtonFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull restoreButtonTextColor;
+	[Export("restoreButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor RestoreButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull restoreButtonShadowColor;
+	[Export("restoreButtonShadowColor", ArgumentSemantic.Strong)]
+	UIColor RestoreButtonShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat restoreButtonShadowRadius;
+	[Export("restoreButtonShadowRadius")]
+	nfloat RestoreButtonShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat purchaseTermsFontSize;
+	[Export("purchaseTermsFontSize")]
+	nfloat PurchaseTermsFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull purchaseTermsTextColor;
+	[Export("purchaseTermsTextColor", ArgumentSemantic.Strong)]
+	UIColor PurchaseTermsTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull purchaseTermsShadowColor;
+	[Export("purchaseTermsShadowColor", ArgumentSemantic.Strong)]
+	UIColor PurchaseTermsShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat purchaseTermsShadowRadius;
+	[Export("purchaseTermsShadowRadius")]
+	nfloat PurchaseTermsShadowRadius { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull termsLinkColor;
+	[Export("termsLinkColor", ArgumentSemantic.Strong)]
+	UIColor TermsLinkColor { get; set; }
+}
+
+// @interface Nami_Swift_2004 (SKProduct)
+[Category]
 	[BaseType (typeof(SKProduct))]
 	interface SKProductInstance
 	{
