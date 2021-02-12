@@ -461,7 +461,7 @@ SWIFT_CLASS("_TtC4Nami22NamiEntitlementManager")
 /// list of active NamiEntitlement objects.
 + (NSArray<NamiEntitlement *> * _Nonnull)activeEntitlements SWIFT_WARN_UNUSED_RESULT;
 /// Check if a specific entitlement ID is active.
-/// \param id Entitlement ID to check.  Defined in the Control Center.
+/// \param referenceID Entitlement ID to check.  Defined in the Control Center.
 ///
 ///
 /// returns:
@@ -476,10 +476,19 @@ SWIFT_CLASS("_TtC4Nami22NamiEntitlementManager")
 /// Clears all active entitlements on this device.  If the Nami Platform is aware of any trusted entitlements tied to this device, they may be restored.
 + (void)clearAllEntitlements;
 /// Registers a callback that will be activated when any entitlement activity occurs - either added or removed.
+/// \param changeHandler A callback called when entitlement changes in the system are detected.
+///
 ///
 /// returns:
 /// Active NamiEntitlement objects if any exist, an empty array otherwise.
-+ (void)registerChangeHandlerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
++ (void)registerEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
+/// Registers a callback that will be activated when any entitlement activity occurs - either added or removed.
+/// \param changeHandler A callback called when entitlement changes in the system are detected.
+///
+///
+/// returns:
+/// Active NamiEntitlement objects if any exist, an empty array otherwise.
++ (void)registerChangeHandlerWithChangeHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler SWIFT_DEPRECATED_MSG("", "registerEntitlementsChangedHandler:");
 @end
 
 enum NamiPlatformType : NSInteger;
@@ -636,9 +645,14 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 ///
 + (void)presentNamiPaywallFromVC:(UIViewController * _Nullable)fromVC products:(NSArray<NamiSKU *> * _Nullable)products paywallMetadata:(NamiPaywall * _Nonnull)paywallMetadata backgroundImage:(UIImage * _Nullable)backgroundImage forNami:(BOOL)forNami;
 /// Provides Nami a callback that can override any automated attempt to raise a paywall, such as when the application is in a critical section where the screen should not be obscured.
+/// Does not apply to User-Initiated paywalls displayed with the <code>raisePaywall</code> method.
+/// \param allowAutoRaisePaywallHandler A callback that wil be called at a time Nami is planning to auto-raise a paywall. if it is OK to auto-raise a paywall.  Return false to block the current paywall raise attempt, true to allow it.
+///
++ (void)registerAllowAutoRaisePaywallHandler:(BOOL (^ _Nullable)(void))allowAutoRaisePaywallHandler;
+/// Provides Nami a callback that can override any automated attempt to raise a paywall, such as when the application is in a critical section where the screen should not be obscured.
 /// \param applicationAutoRaisePaywallBlocker A callback that wil be called at a time Nami is planning to auto-raise a paywall. if it is OK to auto-raise a paywall.  Return false to block the current paywall raise attempt, true to allow it.
 ///
-+ (void)registerApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker;
++ (void)registerWithApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker SWIFT_DEPRECATED_MSG("", "registerAllowAutoRaisePaywallHandler:");
 /// Loads information needed for a paywall specified by the developerID, such as local products and paywall backgrounds, then provides any loaded assets along with paywall metadata from Nami to the provided callback.  If the developerPaywallID does not match any existing paywalls, the callback will be activated with the metadata and products left empty.
 /// \param developerPaywallID The developer ID specified in the Control Center for the paywall you would like metadata and infomation for.
 ///
@@ -646,16 +660,31 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 ///
 + (void)fetchCustomPaywallMetaForDeveloperID:(NSString * _Nonnull)developerPaywallID :(void (^ _Nonnull)(NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nullable))namiCustomPaywallHandler;
 /// Provides Nami a callback that is called when a paywall is to be raised, and the current paywall defintiion is a linked paywall.  The callback is given all of the metadata that Nami has on the paywall, along with pre-loaded assets like products and the paywall background.  When this method is called, the intent is for a paywall to the displayed for the user at that time.
+/// \param applicationPaywallHandler A callback that wil be called at a time Nami wishes the app to raise a paywall.
+///
++ (void)registerPaywallRaiseHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallHandler;
+/// Provides Nami a callback that is called when a paywall is to be raised, and the current paywall defintiion is a linked paywall.  The callback is given all of the metadata that Nami has on the paywall, along with pre-loaded assets like products and the paywall background.  When this method is called, the intent is for a paywall to the displayed for the user at that time.
 /// \param applicationPaywallProvider A callback that wil be called at a time Nami wishes the app to raise a paywall.
 ///
-+ (void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider;
++ (void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider SWIFT_DEPRECATED_MSG("", "registerPaywallRaiseHandler:");
+/// Provides Nami a callback to activate addiitonal UI required for the user to attempt to log in.  This is called when a paywall is raised that has a “sign in” button the user taps.
+/// \param applicationSignInHandler A callback that wil be called at a time Nami is told a sign-in request has been made by a paywall.
+///
++ (void)registerSignInHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInHandler;
 /// Provides Nami a callback to activate addiitonal UI required for the user to attempt to log in.  This is called when a paywall is raised that has a “sign in” button the user taps.
 /// \param applicationSignInProvider A callback that wil be called at a time Nami is told a sign-in request has been made by a paywall.
 ///
-+ (void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider;
++ (void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider SWIFT_DEPRECATED_MSG("", "registerSignInHandler:");
 /// If paywall close is disabled, this lets you allow closing while presenting an alternate UI to the user.
 /// If not set, the paywall will not allow close and the close button will not be present.
-+ (void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler;
+/// \param blockingPaywallClosedHandler A callback that wil be called if a Nami paywall is being closed.
+///
++ (void)registerBlockingPaywallClosedHandler:(void (^ _Nullable)(void))blockingPaywallClosedHandler;
+/// If paywall close is disabled, this lets you allow closing while presenting an alternate UI to the user.
+/// If not set, the paywall will not allow close and the close button will not be present.
+/// \param applicationBlockingPaywallClosedHandler A callback that wil be called if a Nami paywall is being closed.
+///
++ (void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler SWIFT_DEPRECATED_MSG("", "registerBlockingPaywallClosedHandler:");
 /// Used to ask if Nami has loaded any paywall definitons from the server. If the SDK could not load definitions, or no paywall definitions are present this method will return false.
 ///
 /// returns:
@@ -671,6 +700,13 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 /// \param forNami true if the paywall is being raised for the NamiSDK, false if from a user request.
 ///
 + (void)raisePaywallFromVC:(UIViewController * _Nullable)fromVC forNami:(BOOL)forNami;
+/// Called when the application wishes a paywall to be raised for a paywall with a specific developer ID, for specialized paywall presentation.
+/// If a paywall with the given developerPaywallID cannot be found, nothing will occur.
+/// \param developerPaywallID The developerPaywallID as defined on the Nami Control Center.
+///
+/// \param fromVC A view controller to present the paywall from if desired, can be null.
+///
++ (void)raisePaywallWithDeveloperPaywallID:(NSString * _Nonnull)developerPaywallID fromVC:(UIViewController * _Nullable)fromVC;
 /// Call in the case when you want to be sure a Nami paywall will have been dismissed if open
 /// \param animated True for standard UIKit animation of dismissal, false otherwise.
 ///
@@ -720,7 +756,7 @@ SWIFT_CLASS("_TtC4Nami19NamiPurchaseManager")
 /// Tell the SDK to purchase a specific SKU.  To obtain a NamiSKU object, see the skusForSKUIDs(skuIDs, producthandler) call.
 /// \param sku The NamiSKU to purchase, a wrapper around a native StoreKit product.
 ///
-/// \param fromPaywall Optional, If you are using a Nami defined paywall (either linked or cloud created) provide it here to capture details around which paywall an item was purchased from.
+/// \param paywall Optional, If you are using a Nami defined paywall (either linked or cloud created) provide it here to capture details around which paywall an item was purchased from.
 ///
 /// \param responseHandler Callback to provide purchase and status details around the purchase attempt.  See NamiPurchaseResponseHandler for details.
 ///
@@ -762,10 +798,19 @@ SWIFT_CLASS("_TtC4Nami19NamiPurchaseManager")
 /// NamiPurchase objects if any purchases are found, an empty array otherwise.
 + (NSArray<NamiPurchase *> * _Nonnull)allPurchases SWIFT_WARN_UNUSED_RESULT;
 /// Registers a callback that will be activated when any purchase activity occurs - either purchases or expiration.
+/// \param changeHandler A callback called when StoreKit purchase changes in the system are detected.
+///
 ///
 /// returns:
 /// NamiPurchase objects if any purchases are found, an empty array otherwise.
-+ (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
++ (void)registerPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
+/// Registers a callback that will be activated when any purchase activity occurs - either purchases or expiration.
+/// \param changeHandler A callback called when StoreKit purchase changes in the system are detected.
+///
+///
+/// returns:
+/// NamiPurchase objects if any purchases are found, an empty array otherwise.
++ (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler SWIFT_DEPRECATED_MSG("", "registerPurchasesChangedHandler:");
 /// Activates the system restore purchases feature, which replays all prior purchase transactions to determine which purchases are active.  This may trigger an app store password prompt if called, so only call this at the request of the user.  Generally this is not needed if your Nami account supports receipt validation, as a receipt is checked for on first launch and can determine active purchases that way.
 /// \param handler A callback called when the restore process is complete, with all known purchases found.
 ///
@@ -826,6 +871,8 @@ SWIFT_CLASS("_TtC4Nami18NamiReceiptWrapper")
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull receiptJSONDict;
 /// Lets you know if there’s any receupt data to lok at, in cases of varous errors or passive mode, you’ll not have receipt data from a validation call.
 @property (nonatomic, readonly) BOOL hasReceiptData;
+/// Lets you know if the error messages mean your shared secret may not be set correctly.
+@property (nonatomic, readonly) BOOL possibleReceiptSharedSecretIssue;
 /// The status code for this attempt at receipt validation.
 @property (nonatomic, readonly) NSInteger statusCode;
 /// The current StoreKit environment, for objective C.
@@ -854,14 +901,6 @@ SWIFT_CLASS("_TtC4Nami7NamiSKU")
 @property (nonatomic, readonly, copy) NSString * _Nonnull platformID;
 /// The Platform speciifc ID, or productIdentifier for Apple platforms.
 @property (nonatomic, readonly, copy) NSString * _Nonnull skuID;
-/// Returns TRUE if the SKU has an introductory price the current user can make use of.  Relies on receipt processing.
-@property (nonatomic, readonly) BOOL isEligibleForIntroductoryOffers;
-/// Returns a user-readable formatted version of the current product price, taking into account if the product has an applicable discount.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedCurrentPrice;
-/// Returns a user-readable formatted version of the base product price, incuding the appropriate currency symbol for the product.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedBasePrice;
-/// If there is an introductory price for this product, this will return the user-readable string formatted with the proper currency symbol.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedIntroductoryPrice;
 /// The Store ID, or productIdentifier for Apple platforms.
 @property (nonatomic, copy) NSString * _Nonnull storeID;
 /// If available, the local system object for this product.  For SKU types not of the current platform, this will always be empty.
@@ -918,7 +957,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
 + (NSData * _Nullable)appReceiptData SWIFT_WARN_UNUSED_RESULT;
 /// Last app receipt json obtained, if any.
-+ (NamiReceiptWrapper * _Nullable)appReceipt SWIFT_WARN_UNUSED_RESULT;
++ (NSDictionary<NSString *, id> * _Nonnull)appReceiptJSON SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -1029,7 +1068,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) NSNumberFormatter * _N
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedPrice;
 /// The price as is, price for six months is one set value.
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedPerUnitPrice;
-/// The price with any unit multiplication added in, total price for the user
+/// The price as is, price for six months is one set value.
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedMultipliedPrice;
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedDuration SWIFT_AVAILABILITY(ios,introduced=11.2);
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedDurationNoPer SWIFT_AVAILABILITY(ios,introduced=11.2);
@@ -1555,7 +1594,7 @@ SWIFT_CLASS("_TtC4Nami22NamiEntitlementManager")
 /// list of active NamiEntitlement objects.
 + (NSArray<NamiEntitlement *> * _Nonnull)activeEntitlements SWIFT_WARN_UNUSED_RESULT;
 /// Check if a specific entitlement ID is active.
-/// \param id Entitlement ID to check.  Defined in the Control Center.
+/// \param referenceID Entitlement ID to check.  Defined in the Control Center.
 ///
 ///
 /// returns:
@@ -1570,10 +1609,19 @@ SWIFT_CLASS("_TtC4Nami22NamiEntitlementManager")
 /// Clears all active entitlements on this device.  If the Nami Platform is aware of any trusted entitlements tied to this device, they may be restored.
 + (void)clearAllEntitlements;
 /// Registers a callback that will be activated when any entitlement activity occurs - either added or removed.
+/// \param changeHandler A callback called when entitlement changes in the system are detected.
+///
 ///
 /// returns:
 /// Active NamiEntitlement objects if any exist, an empty array otherwise.
-+ (void)registerChangeHandlerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
++ (void)registerEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
+/// Registers a callback that will be activated when any entitlement activity occurs - either added or removed.
+/// \param changeHandler A callback called when entitlement changes in the system are detected.
+///
+///
+/// returns:
+/// Active NamiEntitlement objects if any exist, an empty array otherwise.
++ (void)registerChangeHandlerWithChangeHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler SWIFT_DEPRECATED_MSG("", "registerEntitlementsChangedHandler:");
 @end
 
 enum NamiPlatformType : NSInteger;
@@ -1730,9 +1778,14 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 ///
 + (void)presentNamiPaywallFromVC:(UIViewController * _Nullable)fromVC products:(NSArray<NamiSKU *> * _Nullable)products paywallMetadata:(NamiPaywall * _Nonnull)paywallMetadata backgroundImage:(UIImage * _Nullable)backgroundImage forNami:(BOOL)forNami;
 /// Provides Nami a callback that can override any automated attempt to raise a paywall, such as when the application is in a critical section where the screen should not be obscured.
+/// Does not apply to User-Initiated paywalls displayed with the <code>raisePaywall</code> method.
+/// \param allowAutoRaisePaywallHandler A callback that wil be called at a time Nami is planning to auto-raise a paywall. if it is OK to auto-raise a paywall.  Return false to block the current paywall raise attempt, true to allow it.
+///
++ (void)registerAllowAutoRaisePaywallHandler:(BOOL (^ _Nullable)(void))allowAutoRaisePaywallHandler;
+/// Provides Nami a callback that can override any automated attempt to raise a paywall, such as when the application is in a critical section where the screen should not be obscured.
 /// \param applicationAutoRaisePaywallBlocker A callback that wil be called at a time Nami is planning to auto-raise a paywall. if it is OK to auto-raise a paywall.  Return false to block the current paywall raise attempt, true to allow it.
 ///
-+ (void)registerApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker;
++ (void)registerWithApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker SWIFT_DEPRECATED_MSG("", "registerAllowAutoRaisePaywallHandler:");
 /// Loads information needed for a paywall specified by the developerID, such as local products and paywall backgrounds, then provides any loaded assets along with paywall metadata from Nami to the provided callback.  If the developerPaywallID does not match any existing paywalls, the callback will be activated with the metadata and products left empty.
 /// \param developerPaywallID The developer ID specified in the Control Center for the paywall you would like metadata and infomation for.
 ///
@@ -1740,16 +1793,31 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 ///
 + (void)fetchCustomPaywallMetaForDeveloperID:(NSString * _Nonnull)developerPaywallID :(void (^ _Nonnull)(NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nullable))namiCustomPaywallHandler;
 /// Provides Nami a callback that is called when a paywall is to be raised, and the current paywall defintiion is a linked paywall.  The callback is given all of the metadata that Nami has on the paywall, along with pre-loaded assets like products and the paywall background.  When this method is called, the intent is for a paywall to the displayed for the user at that time.
+/// \param applicationPaywallHandler A callback that wil be called at a time Nami wishes the app to raise a paywall.
+///
++ (void)registerPaywallRaiseHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallHandler;
+/// Provides Nami a callback that is called when a paywall is to be raised, and the current paywall defintiion is a linked paywall.  The callback is given all of the metadata that Nami has on the paywall, along with pre-loaded assets like products and the paywall background.  When this method is called, the intent is for a paywall to the displayed for the user at that time.
 /// \param applicationPaywallProvider A callback that wil be called at a time Nami wishes the app to raise a paywall.
 ///
-+ (void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider;
++ (void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider SWIFT_DEPRECATED_MSG("", "registerPaywallRaiseHandler:");
+/// Provides Nami a callback to activate addiitonal UI required for the user to attempt to log in.  This is called when a paywall is raised that has a “sign in” button the user taps.
+/// \param applicationSignInHandler A callback that wil be called at a time Nami is told a sign-in request has been made by a paywall.
+///
++ (void)registerSignInHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInHandler;
 /// Provides Nami a callback to activate addiitonal UI required for the user to attempt to log in.  This is called when a paywall is raised that has a “sign in” button the user taps.
 /// \param applicationSignInProvider A callback that wil be called at a time Nami is told a sign-in request has been made by a paywall.
 ///
-+ (void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider;
++ (void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider SWIFT_DEPRECATED_MSG("", "registerSignInHandler:");
 /// If paywall close is disabled, this lets you allow closing while presenting an alternate UI to the user.
 /// If not set, the paywall will not allow close and the close button will not be present.
-+ (void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler;
+/// \param blockingPaywallClosedHandler A callback that wil be called if a Nami paywall is being closed.
+///
++ (void)registerBlockingPaywallClosedHandler:(void (^ _Nullable)(void))blockingPaywallClosedHandler;
+/// If paywall close is disabled, this lets you allow closing while presenting an alternate UI to the user.
+/// If not set, the paywall will not allow close and the close button will not be present.
+/// \param applicationBlockingPaywallClosedHandler A callback that wil be called if a Nami paywall is being closed.
+///
++ (void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler SWIFT_DEPRECATED_MSG("", "registerBlockingPaywallClosedHandler:");
 /// Used to ask if Nami has loaded any paywall definitons from the server. If the SDK could not load definitions, or no paywall definitions are present this method will return false.
 ///
 /// returns:
@@ -1765,6 +1833,13 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 /// \param forNami true if the paywall is being raised for the NamiSDK, false if from a user request.
 ///
 + (void)raisePaywallFromVC:(UIViewController * _Nullable)fromVC forNami:(BOOL)forNami;
+/// Called when the application wishes a paywall to be raised for a paywall with a specific developer ID, for specialized paywall presentation.
+/// If a paywall with the given developerPaywallID cannot be found, nothing will occur.
+/// \param developerPaywallID The developerPaywallID as defined on the Nami Control Center.
+///
+/// \param fromVC A view controller to present the paywall from if desired, can be null.
+///
++ (void)raisePaywallWithDeveloperPaywallID:(NSString * _Nonnull)developerPaywallID fromVC:(UIViewController * _Nullable)fromVC;
 /// Call in the case when you want to be sure a Nami paywall will have been dismissed if open
 /// \param animated True for standard UIKit animation of dismissal, false otherwise.
 ///
@@ -1814,7 +1889,7 @@ SWIFT_CLASS("_TtC4Nami19NamiPurchaseManager")
 /// Tell the SDK to purchase a specific SKU.  To obtain a NamiSKU object, see the skusForSKUIDs(skuIDs, producthandler) call.
 /// \param sku The NamiSKU to purchase, a wrapper around a native StoreKit product.
 ///
-/// \param fromPaywall Optional, If you are using a Nami defined paywall (either linked or cloud created) provide it here to capture details around which paywall an item was purchased from.
+/// \param paywall Optional, If you are using a Nami defined paywall (either linked or cloud created) provide it here to capture details around which paywall an item was purchased from.
 ///
 /// \param responseHandler Callback to provide purchase and status details around the purchase attempt.  See NamiPurchaseResponseHandler for details.
 ///
@@ -1856,10 +1931,19 @@ SWIFT_CLASS("_TtC4Nami19NamiPurchaseManager")
 /// NamiPurchase objects if any purchases are found, an empty array otherwise.
 + (NSArray<NamiPurchase *> * _Nonnull)allPurchases SWIFT_WARN_UNUSED_RESULT;
 /// Registers a callback that will be activated when any purchase activity occurs - either purchases or expiration.
+/// \param changeHandler A callback called when StoreKit purchase changes in the system are detected.
+///
 ///
 /// returns:
 /// NamiPurchase objects if any purchases are found, an empty array otherwise.
-+ (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
++ (void)registerPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
+/// Registers a callback that will be activated when any purchase activity occurs - either purchases or expiration.
+/// \param changeHandler A callback called when StoreKit purchase changes in the system are detected.
+///
+///
+/// returns:
+/// NamiPurchase objects if any purchases are found, an empty array otherwise.
++ (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler SWIFT_DEPRECATED_MSG("", "registerPurchasesChangedHandler:");
 /// Activates the system restore purchases feature, which replays all prior purchase transactions to determine which purchases are active.  This may trigger an app store password prompt if called, so only call this at the request of the user.  Generally this is not needed if your Nami account supports receipt validation, as a receipt is checked for on first launch and can determine active purchases that way.
 /// \param handler A callback called when the restore process is complete, with all known purchases found.
 ///
@@ -1920,6 +2004,8 @@ SWIFT_CLASS("_TtC4Nami18NamiReceiptWrapper")
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull receiptJSONDict;
 /// Lets you know if there’s any receupt data to lok at, in cases of varous errors or passive mode, you’ll not have receipt data from a validation call.
 @property (nonatomic, readonly) BOOL hasReceiptData;
+/// Lets you know if the error messages mean your shared secret may not be set correctly.
+@property (nonatomic, readonly) BOOL possibleReceiptSharedSecretIssue;
 /// The status code for this attempt at receipt validation.
 @property (nonatomic, readonly) NSInteger statusCode;
 /// The current StoreKit environment, for objective C.
@@ -1948,14 +2034,6 @@ SWIFT_CLASS("_TtC4Nami7NamiSKU")
 @property (nonatomic, readonly, copy) NSString * _Nonnull platformID;
 /// The Platform speciifc ID, or productIdentifier for Apple platforms.
 @property (nonatomic, readonly, copy) NSString * _Nonnull skuID;
-/// Returns TRUE if the SKU has an introductory price the current user can make use of.  Relies on receipt processing.
-@property (nonatomic, readonly) BOOL isEligibleForIntroductoryOffers;
-/// Returns a user-readable formatted version of the current product price, taking into account if the product has an applicable discount.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedCurrentPrice;
-/// Returns a user-readable formatted version of the base product price, incuding the appropriate currency symbol for the product.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedBasePrice;
-/// If there is an introductory price for this product, this will return the user-readable string formatted with the proper currency symbol.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedIntroductoryPrice;
 /// The Store ID, or productIdentifier for Apple platforms.
 @property (nonatomic, copy) NSString * _Nonnull storeID;
 /// If available, the local system object for this product.  For SKU types not of the current platform, this will always be empty.
@@ -2012,7 +2090,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
 + (NSData * _Nullable)appReceiptData SWIFT_WARN_UNUSED_RESULT;
 /// Last app receipt json obtained, if any.
-+ (NamiReceiptWrapper * _Nullable)appReceipt SWIFT_WARN_UNUSED_RESULT;
++ (NSDictionary<NSString *, id> * _Nonnull)appReceiptJSON SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -2123,7 +2201,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) NSNumberFormatter * _N
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedPrice;
 /// The price as is, price for six months is one set value.
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedPerUnitPrice;
-/// The price with any unit multiplication added in, total price for the user
+/// The price as is, price for six months is one set value.
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedMultipliedPrice;
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedDuration SWIFT_AVAILABILITY(ios,introduced=11.2);
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedDurationNoPer SWIFT_AVAILABILITY(ios,introduced=11.2);
@@ -2647,7 +2725,7 @@ SWIFT_CLASS("_TtC4Nami22NamiEntitlementManager")
 /// list of active NamiEntitlement objects.
 + (NSArray<NamiEntitlement *> * _Nonnull)activeEntitlements SWIFT_WARN_UNUSED_RESULT;
 /// Check if a specific entitlement ID is active.
-/// \param id Entitlement ID to check.  Defined in the Control Center.
+/// \param referenceID Entitlement ID to check.  Defined in the Control Center.
 ///
 ///
 /// returns:
@@ -2662,10 +2740,19 @@ SWIFT_CLASS("_TtC4Nami22NamiEntitlementManager")
 /// Clears all active entitlements on this device.  If the Nami Platform is aware of any trusted entitlements tied to this device, they may be restored.
 + (void)clearAllEntitlements;
 /// Registers a callback that will be activated when any entitlement activity occurs - either added or removed.
+/// \param changeHandler A callback called when entitlement changes in the system are detected.
+///
 ///
 /// returns:
 /// Active NamiEntitlement objects if any exist, an empty array otherwise.
-+ (void)registerChangeHandlerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
++ (void)registerEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
+/// Registers a callback that will be activated when any entitlement activity occurs - either added or removed.
+/// \param changeHandler A callback called when entitlement changes in the system are detected.
+///
+///
+/// returns:
+/// Active NamiEntitlement objects if any exist, an empty array otherwise.
++ (void)registerChangeHandlerWithChangeHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler SWIFT_DEPRECATED_MSG("", "registerEntitlementsChangedHandler:");
 @end
 
 enum NamiPlatformType : NSInteger;
@@ -2822,9 +2909,14 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 ///
 + (void)presentNamiPaywallFromVC:(UIViewController * _Nullable)fromVC products:(NSArray<NamiSKU *> * _Nullable)products paywallMetadata:(NamiPaywall * _Nonnull)paywallMetadata backgroundImage:(UIImage * _Nullable)backgroundImage forNami:(BOOL)forNami;
 /// Provides Nami a callback that can override any automated attempt to raise a paywall, such as when the application is in a critical section where the screen should not be obscured.
+/// Does not apply to User-Initiated paywalls displayed with the <code>raisePaywall</code> method.
+/// \param allowAutoRaisePaywallHandler A callback that wil be called at a time Nami is planning to auto-raise a paywall. if it is OK to auto-raise a paywall.  Return false to block the current paywall raise attempt, true to allow it.
+///
++ (void)registerAllowAutoRaisePaywallHandler:(BOOL (^ _Nullable)(void))allowAutoRaisePaywallHandler;
+/// Provides Nami a callback that can override any automated attempt to raise a paywall, such as when the application is in a critical section where the screen should not be obscured.
 /// \param applicationAutoRaisePaywallBlocker A callback that wil be called at a time Nami is planning to auto-raise a paywall. if it is OK to auto-raise a paywall.  Return false to block the current paywall raise attempt, true to allow it.
 ///
-+ (void)registerApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker;
++ (void)registerWithApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker SWIFT_DEPRECATED_MSG("", "registerAllowAutoRaisePaywallHandler:");
 /// Loads information needed for a paywall specified by the developerID, such as local products and paywall backgrounds, then provides any loaded assets along with paywall metadata from Nami to the provided callback.  If the developerPaywallID does not match any existing paywalls, the callback will be activated with the metadata and products left empty.
 /// \param developerPaywallID The developer ID specified in the Control Center for the paywall you would like metadata and infomation for.
 ///
@@ -2832,16 +2924,31 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 ///
 + (void)fetchCustomPaywallMetaForDeveloperID:(NSString * _Nonnull)developerPaywallID :(void (^ _Nonnull)(NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nullable))namiCustomPaywallHandler;
 /// Provides Nami a callback that is called when a paywall is to be raised, and the current paywall defintiion is a linked paywall.  The callback is given all of the metadata that Nami has on the paywall, along with pre-loaded assets like products and the paywall background.  When this method is called, the intent is for a paywall to the displayed for the user at that time.
+/// \param applicationPaywallHandler A callback that wil be called at a time Nami wishes the app to raise a paywall.
+///
++ (void)registerPaywallRaiseHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallHandler;
+/// Provides Nami a callback that is called when a paywall is to be raised, and the current paywall defintiion is a linked paywall.  The callback is given all of the metadata that Nami has on the paywall, along with pre-loaded assets like products and the paywall background.  When this method is called, the intent is for a paywall to the displayed for the user at that time.
 /// \param applicationPaywallProvider A callback that wil be called at a time Nami wishes the app to raise a paywall.
 ///
-+ (void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider;
++ (void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider SWIFT_DEPRECATED_MSG("", "registerPaywallRaiseHandler:");
+/// Provides Nami a callback to activate addiitonal UI required for the user to attempt to log in.  This is called when a paywall is raised that has a “sign in” button the user taps.
+/// \param applicationSignInHandler A callback that wil be called at a time Nami is told a sign-in request has been made by a paywall.
+///
++ (void)registerSignInHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInHandler;
 /// Provides Nami a callback to activate addiitonal UI required for the user to attempt to log in.  This is called when a paywall is raised that has a “sign in” button the user taps.
 /// \param applicationSignInProvider A callback that wil be called at a time Nami is told a sign-in request has been made by a paywall.
 ///
-+ (void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider;
++ (void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider SWIFT_DEPRECATED_MSG("", "registerSignInHandler:");
 /// If paywall close is disabled, this lets you allow closing while presenting an alternate UI to the user.
 /// If not set, the paywall will not allow close and the close button will not be present.
-+ (void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler;
+/// \param blockingPaywallClosedHandler A callback that wil be called if a Nami paywall is being closed.
+///
++ (void)registerBlockingPaywallClosedHandler:(void (^ _Nullable)(void))blockingPaywallClosedHandler;
+/// If paywall close is disabled, this lets you allow closing while presenting an alternate UI to the user.
+/// If not set, the paywall will not allow close and the close button will not be present.
+/// \param applicationBlockingPaywallClosedHandler A callback that wil be called if a Nami paywall is being closed.
+///
++ (void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler SWIFT_DEPRECATED_MSG("", "registerBlockingPaywallClosedHandler:");
 /// Used to ask if Nami has loaded any paywall definitons from the server. If the SDK could not load definitions, or no paywall definitions are present this method will return false.
 ///
 /// returns:
@@ -2857,6 +2964,13 @@ SWIFT_CLASS("_TtC4Nami18NamiPaywallManager")
 /// \param forNami true if the paywall is being raised for the NamiSDK, false if from a user request.
 ///
 + (void)raisePaywallFromVC:(UIViewController * _Nullable)fromVC forNami:(BOOL)forNami;
+/// Called when the application wishes a paywall to be raised for a paywall with a specific developer ID, for specialized paywall presentation.
+/// If a paywall with the given developerPaywallID cannot be found, nothing will occur.
+/// \param developerPaywallID The developerPaywallID as defined on the Nami Control Center.
+///
+/// \param fromVC A view controller to present the paywall from if desired, can be null.
+///
++ (void)raisePaywallWithDeveloperPaywallID:(NSString * _Nonnull)developerPaywallID fromVC:(UIViewController * _Nullable)fromVC;
 /// Call in the case when you want to be sure a Nami paywall will have been dismissed if open
 /// \param animated True for standard UIKit animation of dismissal, false otherwise.
 ///
@@ -2906,7 +3020,7 @@ SWIFT_CLASS("_TtC4Nami19NamiPurchaseManager")
 /// Tell the SDK to purchase a specific SKU.  To obtain a NamiSKU object, see the skusForSKUIDs(skuIDs, producthandler) call.
 /// \param sku The NamiSKU to purchase, a wrapper around a native StoreKit product.
 ///
-/// \param fromPaywall Optional, If you are using a Nami defined paywall (either linked or cloud created) provide it here to capture details around which paywall an item was purchased from.
+/// \param paywall Optional, If you are using a Nami defined paywall (either linked or cloud created) provide it here to capture details around which paywall an item was purchased from.
 ///
 /// \param responseHandler Callback to provide purchase and status details around the purchase attempt.  See NamiPurchaseResponseHandler for details.
 ///
@@ -2948,10 +3062,19 @@ SWIFT_CLASS("_TtC4Nami19NamiPurchaseManager")
 /// NamiPurchase objects if any purchases are found, an empty array otherwise.
 + (NSArray<NamiPurchase *> * _Nonnull)allPurchases SWIFT_WARN_UNUSED_RESULT;
 /// Registers a callback that will be activated when any purchase activity occurs - either purchases or expiration.
+/// \param changeHandler A callback called when StoreKit purchase changes in the system are detected.
+///
 ///
 /// returns:
 /// NamiPurchase objects if any purchases are found, an empty array otherwise.
-+ (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
++ (void)registerPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
+/// Registers a callback that will be activated when any purchase activity occurs - either purchases or expiration.
+/// \param changeHandler A callback called when StoreKit purchase changes in the system are detected.
+///
+///
+/// returns:
+/// NamiPurchase objects if any purchases are found, an empty array otherwise.
++ (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler SWIFT_DEPRECATED_MSG("", "registerPurchasesChangedHandler:");
 /// Activates the system restore purchases feature, which replays all prior purchase transactions to determine which purchases are active.  This may trigger an app store password prompt if called, so only call this at the request of the user.  Generally this is not needed if your Nami account supports receipt validation, as a receipt is checked for on first launch and can determine active purchases that way.
 /// \param handler A callback called when the restore process is complete, with all known purchases found.
 ///
@@ -3012,6 +3135,8 @@ SWIFT_CLASS("_TtC4Nami18NamiReceiptWrapper")
 @property (nonatomic, copy) NSDictionary<NSString *, id> * _Nonnull receiptJSONDict;
 /// Lets you know if there’s any receupt data to lok at, in cases of varous errors or passive mode, you’ll not have receipt data from a validation call.
 @property (nonatomic, readonly) BOOL hasReceiptData;
+/// Lets you know if the error messages mean your shared secret may not be set correctly.
+@property (nonatomic, readonly) BOOL possibleReceiptSharedSecretIssue;
 /// The status code for this attempt at receipt validation.
 @property (nonatomic, readonly) NSInteger statusCode;
 /// The current StoreKit environment, for objective C.
@@ -3040,14 +3165,6 @@ SWIFT_CLASS("_TtC4Nami7NamiSKU")
 @property (nonatomic, readonly, copy) NSString * _Nonnull platformID;
 /// The Platform speciifc ID, or productIdentifier for Apple platforms.
 @property (nonatomic, readonly, copy) NSString * _Nonnull skuID;
-/// Returns TRUE if the SKU has an introductory price the current user can make use of.  Relies on receipt processing.
-@property (nonatomic, readonly) BOOL isEligibleForIntroductoryOffers;
-/// Returns a user-readable formatted version of the current product price, taking into account if the product has an applicable discount.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedCurrentPrice;
-/// Returns a user-readable formatted version of the base product price, incuding the appropriate currency symbol for the product.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedBasePrice;
-/// If there is an introductory price for this product, this will return the user-readable string formatted with the proper currency symbol.
-@property (nonatomic, readonly, copy) NSString * _Nullable localizedIntroductoryPrice;
 /// The Store ID, or productIdentifier for Apple platforms.
 @property (nonatomic, copy) NSString * _Nonnull storeID;
 /// If available, the local system object for this product.  For SKU types not of the current platform, this will always be empty.
@@ -3104,7 +3221,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 - (void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
 + (NSData * _Nullable)appReceiptData SWIFT_WARN_UNUSED_RESULT;
 /// Last app receipt json obtained, if any.
-+ (NamiReceiptWrapper * _Nullable)appReceipt SWIFT_WARN_UNUSED_RESULT;
++ (NSDictionary<NSString *, id> * _Nonnull)appReceiptJSON SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -3215,7 +3332,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) NSNumberFormatter * _N
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedPrice;
 /// The price as is, price for six months is one set value.
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedPerUnitPrice;
-/// The price with any unit multiplication added in, total price for the user
+/// The price as is, price for six months is one set value.
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedMultipliedPrice;
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedDuration SWIFT_AVAILABILITY(ios,introduced=11.2);
 @property (nonatomic, readonly, copy) NSString * _Nullable localizedDurationNoPer SWIFT_AVAILABILITY(ios,introduced=11.2);
