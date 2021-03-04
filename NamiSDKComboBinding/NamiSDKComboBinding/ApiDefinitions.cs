@@ -6,7 +6,7 @@ using ObjCRuntime;
 using StoreKit;
 using UIKit;
 
-namespace Binding
+namespace NamiML
 {
 	// @interface CustomerJourneyState : NSObject <NSCoding>
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami20CustomerJourneyState")]
@@ -36,52 +36,41 @@ namespace Binding
     [DisableDefaultCtor]
     interface Nami
     {
-        // @property (readonly, nonatomic, strong, class) Nami * _Nonnull shared;
-        [Static]
-        [Export("shared", ArgumentSemantic.Strong)]
-        Nami Shared { get; }
-    }
+		// +(void)configureWithNamiConfig:(NamiConfiguration * _Nonnull)namiConfig;
+		[Static]
+		[Export("configureWithNamiConfig:")]
+		void ConfigureWithNamiConfig(NamiConfiguration namiConfig);
 
-    // @interface Nami_Swift_1345 (Nami)
-    [Category]
-    [BaseType(typeof(Nami))]
-    interface Nami_Nami_Swift_1345
-    {
-        // +(void)configureWithNamiConfig:(NamiConfiguration * _Nonnull)namiConfig;
-        [Static]
-        [Export("configureWithNamiConfig:")]
-        void ConfigureWithNamiConfig(NamiConfiguration namiConfig);
+		// +(void)registerNamiLoggerWithLogger:(id<NamiLoggerClient> _Nonnull)logger;
+		[Static]
+		[Export("registerNamiLoggerWithLogger:")]
+		void RegisterNamiLoggerWithLogger(NamiLoggerClient logger);
 
-        // +(void)registerNamiLoggerWithLogger:(id<NamiLoggerClient> _Nonnull)logger;
-        [Static]
-        [Export("registerNamiLoggerWithLogger:")]
-        void RegisterNamiLoggerWithLogger(NamiLoggerClient logger);
+		// +(void)doConfigBasedWorkWithWorker:(void (^ _Nonnull)(void))worker;
+		[Static]
+		[Export("doConfigBasedWorkWithWorker:")]
+		void DoConfigBasedWorkWithWorker(Action worker);
 
-        // +(void)doConfigBasedWorkWithWorker:(void (^ _Nonnull)(void))worker;
-        [Static]
-        [Export("doConfigBasedWorkWithWorker:")]
-        void DoConfigBasedWorkWithWorker(Action worker);
-
-        // +(void)setExternalIdentifierWithExternalIdentifier:(NSString * _Nullable)externalIdentifier type:(enum NamiExternalIdentifierType)type;
-        [Static]
-        [Export("setExternalIdentifierWithExternalIdentifier:type:")]
-        void SetExternalIdentifierWithExternalIdentifier([NullAllowed] string externalIdentifier, NamiExternalIdentifierType type);
+		// +(void)setExternalIdentifierWithExternalIdentifier:(NSString * _Nullable)externalIdentifier type:(enum NamiExternalIdentifierType)type;
+		[Static]
+		[Export("setExternalIdentifierWithExternalIdentifier:type:")]
+		void SetExternalIdentifier([NullAllowed] string externalIdentifier, NamiExternalIdentifierType type);
 
 		// +(NSString * _Nullable)getExternalIdentifier __attribute__((warn_unused_result("")));
 		[Static]
-		[NullAllowed, Export("getExternalIdentifier")]	
-		string ExternalIdentifier();
+		[NullAllowed, Export("getExternalIdentifier")]
+		string GetExternalIdentifier();
 
-        // +(void)clearExternalIdentifier;
-        [Static]
-        [Export("clearExternalIdentifier")]
-        void ClearExternalIdentifier();
+		// +(void)clearExternalIdentifier;
+		[Static]
+		[Export("clearExternalIdentifier")]
+		void ClearExternalIdentifier();
 
-        // +(void)setLogLevel:(enum NamiLogLevel)logLevel;
-        [Static]
-        [Export("setLogLevel:")]
-        void SetLogLevel(NamiLogLevel logLevel);
-    }
+		// +(void)setLogLevel:(enum NamiLogLevel)logLevel;
+		[Static]
+		[Export("setLogLevel:")]
+		void SetLogLevel(NamiLogLevel logLevel);
+	}
 
     // @interface NamiAnalyticsKeys : NSObject
     [BaseType (typeof(NSObject), Name = "_TtC4Nami17NamiAnalyticsKeys")]
@@ -149,21 +138,13 @@ namespace Binding
 		string[] NamiCommands { get; set; }
 	}
 
-
 	// @interface NamiCustomerManager : NSObject
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami19NamiCustomerManager")]
 	interface NamiCustomerManager
 	{
-	}
-
-	// @interface Nami_Swift_1457 (NamiCustomerManager)
-	[Category]
-	[BaseType (typeof(NamiCustomerManager))]
-	interface NamiCustomerManager_Nami_Swift_1457
-	{
 		// +(CustomerJourneyState * _Nullable)currentCustomerJourneyState __attribute__((warn_unused_result("")));
 		[Static]
-		[NullAllowed, Export ("currentCustomerJourneyState")]
+		[NullAllowed, Export("currentCustomerJourneyState")]
 		CustomerJourneyState CurrentCustomerJourneyState { get; }
 	}
 
@@ -205,20 +186,10 @@ namespace Binding
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami22NamiEntitlementManager")]
 	interface NamiEntitlementManager
     {
-		 //-(void) registerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement*>* _Nonnull))changeHandler;
-		[Export("registerWithEntitlementsChangedHandler:")]
-        void RegisterWithEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
-    }
-
-	// @interface Nami_Swift_1494 (NamiEntitlementManager)
-	[Category]
-	[BaseType (typeof(NamiEntitlementManager))]
-	interface NamiEntitlementManager_Nami_Swift_1494
-	{
 		// +(NSArray<NamiEntitlement *> * _Nonnull)getEntitlements __attribute__((warn_unused_result("")));
 		[Static]
 		[Export("getEntitlements")]
-		NamiEntitlement[] Entitlements();
+		NamiEntitlement[] GetEntitlements();
 
 		// +(NSArray<NamiEntitlement *> * _Nonnull)activeEntitlements __attribute__((warn_unused_result("")));
 		[Static]
@@ -227,24 +198,24 @@ namespace Binding
 
 		// +(BOOL)isEntitlementActive:(NSString * _Nonnull)referenceID __attribute__((warn_unused_result("")));
 		[Static]
-		[Export ("isEntitlementActive:")]
-		bool IsEntitlementActive (string referenceID);
+		[Export("isEntitlementActive:")]
+		bool IsEntitlementActive(string referenceID);
 
 		// +(void)setEntitlements:(NSArray<NamiEntitlementSetter *> * _Nonnull)entitlements;
 		[Static]
-		[Export ("setEntitlements:")]
-		void SetEntitlements (NamiEntitlementSetter[] entitlements);
+		[Export("setEntitlements:")]
+		void SetEntitlements(NamiEntitlementSetter[] entitlements);
 
 		// +(void)clearAllEntitlements;
 		[Static]
-		[Export ("clearAllEntitlements")]
-		void ClearAllEntitlements ();
+		[Export("clearAllEntitlements")]
+		void ClearAllEntitlements();
 
-        // +(void)registerChangeHandlerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
-        [Static]
-        [Export("registerChangeHandlerWithEntitlementsChangedHandler:")]
-        void RegisterChangeHandlerWithEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
-    }
+		// +(void)registerChangeHandlerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
+		[Static]
+		[Export("registerChangeHandlerWithEntitlementsChangedHandler:")]
+		void RegisterWithEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
+	}
 
 	// @interface NamiEntitlementSetter : NSObject
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami21NamiEntitlementSetter")]
@@ -331,37 +302,30 @@ namespace Binding
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami13NamiMLManager")]
 	interface NamiMLManager
 	{
-	}
-
-	// @interface Nami_Swift_1607 (NamiMLManager)
-	[Category]
-	[BaseType (typeof(NamiMLManager))]
-	interface NamiMLManager_Nami_Swift_1607
-	{
 		// +(void)enterCoreContentWithLabels:(NSArray<NSString *> * _Nonnull)labels;
 		[Static]
-		[Export ("enterCoreContentWithLabels:")]
-		void EnterCoreContentWithLabels (string[] labels);
+		[Export("enterCoreContentWithLabels:")]
+		void EnterCoreContentWithLabels(string[] labels);
 
 		// +(void)enterCoreContentWithLabel:(NSString * _Nonnull)label;
 		[Static]
-		[Export ("enterCoreContentWithLabel:")]
-		void EnterCoreContentWithLabel (string label);
+		[Export("enterCoreContentWithLabel:")]
+		void EnterCoreContentWithLabel(string label);
 
 		// +(void)exitCoreContentWithLabels:(NSArray<NSString *> * _Nonnull)labels;
 		[Static]
-		[Export ("exitCoreContentWithLabels:")]
-		void ExitCoreContentWithLabels (string[] labels);
+		[Export("exitCoreContentWithLabels:")]
+		void ExitCoreContentWithLabels(string[] labels);
 
 		// +(void)exitCoreContentWithLabel:(NSString * _Nonnull)label;
 		[Static]
-		[Export ("exitCoreContentWithLabel:")]
-		void ExitCoreContentWithLabel (string label);
+		[Export("exitCoreContentWithLabel:")]
+		void ExitCoreContentWithLabel(string label);
 
 		// +(void)coreActionWithLabel:(NSString * _Nonnull)label;
 		[Static]
-		[Export ("coreActionWithLabel:")]
-		void CoreActionWithLabel (string label);
+		[Export("coreActionWithLabel:")]
+		void CoreActionWithLabel(string label);
 	}
 
 	// @interface NamiPaywall : NSObject
@@ -381,6 +345,10 @@ namespace Binding
 		[NullAllowed, Export ("backgroundImage", ArgumentSemantic.Strong)]
 		UIImage BackgroundImage { get; set; }
 
+		// @property (readonly, nonatomic, strong) PaywallStyleData * _Nonnull styleData;
+		[Export("styleData", ArgumentSemantic.Strong)]
+		PaywallStyleData StyleData { get; }
+
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull developerPaywallID;
 		[Export ("developerPaywallID")]
 		string DeveloperPaywallID { get; }
@@ -399,69 +367,61 @@ namespace Binding
 	//[DisableDefaultCtor]
 	interface NamiPaywallManager
 	{
-	}
-
-	// @interface Nami_Swift_1660 (NamiPaywallManager)
-	[Category]
-	[BaseType (typeof(NamiPaywallManager))]
-	interface NamiPaywallManager_Nami_Swift_1660
-	{
 		// +(void)paywallImpressionWithDeveloperID:(NSString * _Nonnull)developerID;
 		[Static]
-		[Export ("paywallImpressionWithDeveloperID:")]
-		void PaywallImpressionWithDeveloperID (string developerID);
+		[Export("paywallImpressionWithDeveloperID:")]
+		void PaywallImpressionWithDeveloperID(string developerID);
 
 		// +(void)presentNamiPaywallFromVC:(UIViewController * _Nullable)fromVC products:(NSArray<NamiSKU *> * _Nullable)products paywallMetadata:(NamiPaywall * _Nonnull)paywallMetadata backgroundImage:(UIImage * _Nullable)backgroundImage forNami:(BOOL)forNami;
 		[Static]
-		[Export ("presentNamiPaywallFromVC:products:paywallMetadata:backgroundImage:forNami:")]
-		void PresentNamiPaywallFromVC ([NullAllowed] UIViewController fromVC, [NullAllowed] NamiSKU[] products, NamiPaywall paywallMetadata, [NullAllowed] UIImage backgroundImage, bool forNami);
+		[Export("presentNamiPaywallFromVC:products:paywallMetadata:backgroundImage:forNami:")]
+		void PresentNamiPaywallFromVC([NullAllowed] UIViewController fromVC, [NullAllowed] NamiSKU[] products, NamiPaywall paywallMetadata, [NullAllowed] UIImage backgroundImage, bool forNami);
 
-		// +(void)registerApplicationAutoRaisePaywallBlocker:(BOOL (^ _Nullable)(void))applicationAutoRaisePaywallBlocker;
+		// +(void)registerAllowAutoRaisePaywallHandler:(BOOL (^ _Nullable)(void))allowAutoRaisePaywallHandler;
 		[Static]
-		[Export ("registerApplicationAutoRaisePaywallBlocker:")]
-		void RegisterApplicationAutoRaisePaywallBlocker ([NullAllowed] Func<bool> applicationAutoRaisePaywallBlocker);
+		[Export("registerAllowAutoRaisePaywallHandler:")]
+		void RegisterAllowAutoRaisePaywallHandler([NullAllowed] Func<bool> allowAutoRaisePaywallHandler);
 
-		 //+(void) fetchCustomPaywallMetaForDeveloperID:(NSString* _Nonnull) developerPaywallID :(void (^ _Nonnull)(NSArray<NamiSKU*>* _Nullable, NSString* _Nonnull, NamiPaywall* _Nullable))namiCustomPaywallHandler;
+		//+(void) fetchCustomPaywallMetaForDeveloperID:(NSString* _Nonnull) developerPaywallID :(void (^ _Nonnull)(NSArray<NamiSKU*>* _Nullable, NSString* _Nonnull, NamiPaywall* _Nullable))namiCustomPaywallHandler;
 		[Static]
-        [Export("fetchCustomPaywallMetaForDeveloperID::")]
-        void FetchCustomPaywallMetaForDeveloperID(string developerPaywallID, Action<NSArray<NamiSKU>, NSString, NamiPaywall> namiCustomPaywallHandler);
+		[Export("fetchCustomPaywallMetaForDeveloperID::")]
+		void FetchCustomPaywallMetaForDeveloperID(string developerPaywallID, Action<NSArray<NamiSKU>, NSString, NamiPaywall> namiCustomPaywallHandler);
 
-        // +(void)registerWithApplicationPaywallProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallProvider;
-        [Static]
-        [Export("registerWithApplicationPaywallProvider:")]
-        void RegisterWithApplicationPaywallProvider([NullAllowed] Action<UIViewController, NSArray<NamiSKU>, NSString, NamiPaywall> applicationPaywallProvider);
-
-        // +(void)registerWithApplicationSignInProvider:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInProvider;
-        [Static]
-		[Export ("registerWithApplicationSignInProvider:")]
-		void RegisterWithApplicationSignInProvider ([NullAllowed] Action<UIViewController, NSString, NamiPaywall> applicationSignInProvider);
-
-		// +(void)registerWithApplicationBlockingPaywallClosedHandler:(void (^ _Nullable)(void))applicationBlockingPaywallClosedHandler;
+		// +(void)registerPaywallRaiseHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSArray<NamiSKU *> * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationPaywallHandler;
 		[Static]
-		[Export ("registerWithApplicationBlockingPaywallClosedHandler:")]
-		void RegisterWithApplicationBlockingPaywallClosedHandler ([NullAllowed] Action applicationBlockingPaywallClosedHandler);
+		[Export("registerPaywallRaiseHandler:")]
+		void RegisterPaywallRaiseHandler([NullAllowed] Action<UIViewController, NSArray<NamiSKU>, NSString, NamiPaywall> applicationPaywallHandler);
+
+		// +(void)registerSignInHandler:(void (^ _Nullable)(UIViewController * _Nullable, NSString * _Nonnull, NamiPaywall * _Nonnull))applicationSignInHandler;
+		[Static]
+		[Export("registerSignInHandler:")]
+		void RegisterSignInHandler([NullAllowed] Action<UIViewController, NSString, NamiPaywall> applicationSignInHandler);
+
+		// +(void)registerBlockingPaywallClosedHandler:(void (^ _Nullable)(void))blockingPaywallClosedHandler;
+		[Static]
+		[Export("registerBlockingPaywallClosedHandler:")]
+		void RegisterBlockingPaywallClosedHandler([NullAllowed] Action blockingPaywallClosedHandler);		
 
 		// +(BOOL)canRaisePaywall __attribute__((warn_unused_result("")));
 		[Static]
-		[Export ("canRaisePaywall")]
+		[Export("canRaisePaywall")]
 		bool CanRaisePaywall { get; }
 
 		// +(void)raisePaywallFromVC:(UIViewController * _Nullable)fromVC;
 		[Static]
-		[Export ("raisePaywallFromVC:")]
-		void RaisePaywallFromVC ([NullAllowed] UIViewController fromVC);
+		[Export("raisePaywallFromVC:")]
+		void RaisePaywallFromVC([NullAllowed] UIViewController fromVC);
 
-		// +(void)raisePaywallFromVC:(UIViewController * _Nullable)fromVC forNami:(BOOL)forNami;
+		// +(void)raisePaywallWithDeveloperPaywallID:(NSString * _Nonnull)developerPaywallID fromVC:(UIViewController * _Nullable)fromVC;
 		[Static]
-		[Export ("raisePaywallFromVC:forNami:")]
-		void RaisePaywallFromVC ([NullAllowed] UIViewController fromVC, bool forNami);
+		[Export("raisePaywallWithDeveloperPaywallID:fromVC:")]
+		void RaisePaywallWithDeveloperPaywallID(string developerPaywallID, [NullAllowed] UIViewController fromVC);
 
 		// +(void)dismissNamiPaywallIfOpenWithAnimated:(BOOL)animated completion:(void (^ _Nonnull)(void))completion;
 		[Static]
-		[Export ("dismissNamiPaywallIfOpenWithAnimated:completion:")]
-		void DismissNamiPaywallIfOpenWithAnimated (bool animated, Action completion);
+		[Export("dismissNamiPaywallIfOpenWithAnimated:completion:")]
+		void DismissNamiPaywallIfOpen(bool animated, Action completion);
 	}
-
 
 	// @interface NamiPurchase : NSObject
 	[BaseType (typeof(NSObject), Name = "_TtC4Nami12NamiPurchase")]
@@ -479,9 +439,9 @@ namespace Binding
 		[Export ("purchaseInitiatedTimestamp", ArgumentSemantic.Copy)]
 		NSDate PurchaseInitiatedTimestamp { get; set; }
 
-		// @property (copy, nonatomic) NSDate * _Nullable exipres;
-		[NullAllowed, Export ("exipres", ArgumentSemantic.Copy)]
-		NSDate Exipres { get; set; }
+		// @property (copy, nonatomic) NSDate * _Nullable expires;
+		[NullAllowed, Export ("expires", ArgumentSemantic.Copy)]
+		NSDate Expires { get; set; }
 
         // @property (nonatomic) enum NamiPurchaseSource purchaseSource;
         [Export("purchaseSource", ArgumentSemantic.Assign)]
@@ -509,6 +469,11 @@ namespace Binding
         [Static]
 		[Export ("clearBypassStorePurchases")]
 		void ClearBypassStorePurchases ();
+
+		// +(void)clearAndCheckRestoreAllPurchases;
+		[Static]
+		[Export("clearAndCheckRestoreAllPurchases")]
+		void ClearAndCheckRestoreAllPurchases();
 
 		// +(BOOL)isSKUIDPurchased:(NSString * _Nonnull)skuID __attribute__((warn_unused_result("")));
 		[Static]
@@ -550,6 +515,11 @@ namespace Binding
 		[Static]
 		[Export ("consumePurchasedSKUWithSkuID:")]
 		void ConsumePurchasedSKUWithSkuID (string skuID);
+
+		// +(void)presentCodeRedemptionSheet;
+		[Static]
+		[Export("presentCodeRedemptionSheet")]
+		void PresentCodeRedemptionSheet();
 	}
 
 	// @interface NamiReceiptIAPWrapper : NSObject
@@ -734,12 +704,143 @@ namespace Binding
 		string NamiPaywallDidDismissAfterPurchaseNotification { get; }
 	}
 
-	
+	// @interface PaywallStyleData : NSObject
+	[BaseType(typeof(NSObject), Name = "_TtC4Nami16PaywallStyleData")]
+	interface PaywallStyleData
+	{
+		// @property (nonatomic, strong) UIColor * _Nonnull backgroundColor;
+		[Export("backgroundColor", ArgumentSemantic.Strong)]
+	UIColor BackgroundColor { get; set; }
 
-	// @interface Nami_Swift_2004 (SKProduct)
-	[Category]
+	// @property (nonatomic) CGFloat bodyFontSize;
+	[Export("bodyFontSize")]
+	nfloat BodyFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull bodyTextColor;
+	[Export("bodyTextColor", ArgumentSemantic.Strong)]
+	UIColor BodyTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull bodyShadowColor;
+	[Export("bodyShadowColor", ArgumentSemantic.Strong)]
+	UIColor BodyShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat bodyShadowRadius;
+	[Export("bodyShadowRadius")]
+	nfloat BodyShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat titleFontSize;
+	[Export("titleFontSize")]
+	nfloat TitleFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull titleTextColor;
+	[Export("titleTextColor", ArgumentSemantic.Strong)]
+	UIColor TitleTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull titleShadowColor;
+	[Export("titleShadowColor", ArgumentSemantic.Strong)]
+	UIColor TitleShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat titleShadowRadius;
+	[Export("titleShadowRadius")]
+	nfloat TitleShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat closeButtonFontSize;
+	[Export("closeButtonFontSize")]
+	nfloat CloseButtonFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull closeButtonTextColor;
+	[Export("closeButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor CloseButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull closeButtonShadowColor;
+	[Export("closeButtonShadowColor", ArgumentSemantic.Strong)]
+	UIColor CloseButtonShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat closeButtonShadowRadius;
+	[Export("closeButtonShadowRadius")]
+	nfloat CloseButtonShadowRadius { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull bottomOverlayColor;
+	[Export("bottomOverlayColor", ArgumentSemantic.Strong)]
+	UIColor BottomOverlayColor { get; set; }
+
+	// @property (nonatomic) CGFloat bottomOverlayCornerRadius;
+	[Export("bottomOverlayCornerRadius")]
+	nfloat BottomOverlayCornerRadius { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull skuButtonColor;
+	[Export("skuButtonColor", ArgumentSemantic.Strong)]
+	UIColor SkuButtonColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull skuButtonTextColor;
+	[Export("skuButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor SkuButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull featuredSkusButtonColor;
+	[Export("featuredSkusButtonColor", ArgumentSemantic.Strong)]
+	UIColor FeaturedSkusButtonColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull featuredSkusButtonTextColor;
+	[Export("featuredSkusButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor FeaturedSkusButtonTextColor { get; set; }
+
+	// @property (nonatomic) CGFloat signinButtonFontSize;
+	[Export("signinButtonFontSize")]
+	nfloat SigninButtonFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull signinButtonTextColor;
+	[Export("signinButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor SigninButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull signinButtonShadowColor;
+	[Export("signinButtonShadowColor", ArgumentSemantic.Strong)]
+	UIColor SigninButtonShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat signinButtonShadowRadius;
+	[Export("signinButtonShadowRadius")]
+	nfloat SigninButtonShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat restoreButtonFontSize;
+	[Export("restoreButtonFontSize")]
+	nfloat RestoreButtonFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull restoreButtonTextColor;
+	[Export("restoreButtonTextColor", ArgumentSemantic.Strong)]
+	UIColor RestoreButtonTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull restoreButtonShadowColor;
+	[Export("restoreButtonShadowColor", ArgumentSemantic.Strong)]
+	UIColor RestoreButtonShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat restoreButtonShadowRadius;
+	[Export("restoreButtonShadowRadius")]
+	nfloat RestoreButtonShadowRadius { get; set; }
+
+	// @property (nonatomic) CGFloat purchaseTermsFontSize;
+	[Export("purchaseTermsFontSize")]
+	nfloat PurchaseTermsFontSize { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull purchaseTermsTextColor;
+	[Export("purchaseTermsTextColor", ArgumentSemantic.Strong)]
+	UIColor PurchaseTermsTextColor { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull purchaseTermsShadowColor;
+	[Export("purchaseTermsShadowColor", ArgumentSemantic.Strong)]
+	UIColor PurchaseTermsShadowColor { get; set; }
+
+	// @property (nonatomic) CGFloat purchaseTermsShadowRadius;
+	[Export("purchaseTermsShadowRadius")]
+	nfloat PurchaseTermsShadowRadius { get; set; }
+
+	// @property (nonatomic, strong) UIColor * _Nonnull termsLinkColor;
+	[Export("termsLinkColor", ArgumentSemantic.Strong)]
+	UIColor TermsLinkColor { get; set; }
+}
+
+// @interface Nami_Swift_2004 (SKProduct)
+[Category]
 	[BaseType (typeof(SKProduct))]
-	interface SKProduct_Nami_Swift_2004
+	interface SKProductInstance
 	{
 		// -(NSDictionary<NSString *,id> * _Nonnull)namiInfoDict __attribute__((warn_unused_result("")));
 		[Export("namiInfoDict")]
@@ -748,16 +849,10 @@ namespace Binding
         // -(NSDictionary<NSString *,id> * _Nonnull)namiInfoDictWithPurchaseSource:(enum NamiPurchaseSource)purchaseSource __attribute__((warn_unused_result("")));
         [Export("namiInfoDictWithPurchaseSource:")]
         NSDictionary<NSString, NSObject> NamiInfoDictWithPurchaseSource(NamiPurchaseSource purchaseSource);
-    }
 
-	// @interface Nami_Swift_2012 (SKProduct)
-	[Category]
-	[BaseType (typeof(SKProduct))]
-	interface SKProduct_Nami_Swift_2012
-	{
 		// @property (nonatomic, strong, class) NSNumberFormatter * _Nonnull priceFormatter;
 		[Static]
-		[Export ("priceFormatter", ArgumentSemantic.Strong)]
+		[Export("priceFormatter", ArgumentSemantic.Strong)]
 		NSNumberFormatter PriceFormatter { get; set; }
 
 		// @property (readonly, copy, nonatomic) NSString * _Nullable localizedPrice;

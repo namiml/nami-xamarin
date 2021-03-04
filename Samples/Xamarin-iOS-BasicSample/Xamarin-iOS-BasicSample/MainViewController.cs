@@ -1,7 +1,7 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
-using Binding;
+using NamiML;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +9,9 @@ namespace Xamarin_iOS_BasicSample
 {
     public partial class MainViewController : UIViewController
     {
+        UILabel subscriptionStatusLabel;
+        UIScrollView scrollView;
+
         public MainViewController() 
         {
         }
@@ -21,10 +24,13 @@ namespace Xamarin_iOS_BasicSample
             BuildUI();
         }
 
-        private void BuildUI() {
+        public override void ViewWillAppear(bool animated)
+        {
+            LogCustomerJourneyState();
+        }
 
-            this.View.BackgroundColor = UIColor.White;
-
+        private void BuildUI()
+        {
             var titleView = new UIImageView(UIImage.FromBundle("nami_logo_white"))
             {
                 BackgroundColor = new UIColor(red: 0.25f, green: 0.43f, blue: 0.49f, alpha: 1.00f),
@@ -36,28 +42,27 @@ namespace Xamarin_iOS_BasicSample
             nfloat h = 31.0f;
             nfloat w = View.Bounds.Width;
 
+            View.BackgroundColor = UIColor.White;
+
             var aboutButton = UIButton.FromType(UIButtonType.RoundedRect);
             aboutButton.Frame = new CGRect(10, 50, w - 20, 44);
             aboutButton.SetTitle("About", UIControlState.Normal);
-            aboutButton.BackgroundColor = UIColor.White;
-            aboutButton.Layer.CornerRadius = 5f;
             aboutButton.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 
             var subscribeButton = UIButton.FromType(UIButtonType.RoundedRect);
             subscribeButton.Frame = new CGRect(10, 700, w - 20, 44);
             subscribeButton.SetTitle("Subscribe", UIControlState.Normal);
-            subscribeButton.BackgroundColor = UIColor.White;
-            subscribeButton.Layer.CornerRadius = 5f;
             subscribeButton.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 
             subscribeButton.TouchDown += OnSubscribeClicked;
             aboutButton.TouchDown += OnAboutClicked;
 
             
-            var scroll = new UIScrollView(new CGRect(0, 0, View.Frame.Width, View.Frame.Height));
-            scroll.AutoresizingMask = UIViewAutoresizing.All;
+            scrollView = new UIScrollView(new CGRect(0, 0, View.Frame.Width, View.Frame.Height));
+            scrollView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
+            scrollView.ContentSize = new CGSize(View.Frame.Width, 760);
 
-            scroll.AddSubview(new UILabel(new CGRect(0, 0, View.Frame.Width, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(0, 0, View.Frame.Width, 50))
             {
                 Text = "BasicLinked",
                 Font = UIFont.BoldSystemFontOfSize(36),
@@ -65,76 +70,84 @@ namespace Xamarin_iOS_BasicSample
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
 
-            scroll.AddSubview(aboutButton);
+            scrollView.AddSubview(aboutButton);
 
-            scroll.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width, 50))
             {
                 Text = "Introduction",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
 
-            scroll.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width, 150))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 120, View.Frame.Width - 20, 150))
             {
                 Text = "This application demonstrates common calls used in a Nami enabled application.",
                 Font = UIFont.SystemFontOfSize(18),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.All,
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
             });
 
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 250, View.Frame.Width, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 250, View.Frame.Width - 20, 50))
             {
                 Text = "Instructions",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 260, View.Frame.Width, 150))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 260, View.Frame.Width - 20, 150))
             {
                 Text = "If you suspend and resume this app three times in the simulator, an example paywall will be raised - or you can use the Subscribe button below to raise the same paywall.",
                 Font = UIFont.SystemFontOfSize(18),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.All,
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
             });
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 400, View.Frame.Width, 50))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 400, View.Frame.Width - 20, 50))
             {
                 Text = "Important Info",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
             
-            scroll.AddSubview(new UILabel(new CGRect(10, 450, View.Frame.Width, 150))
+            scrollView.AddSubview(new UILabel(new CGRect(10, 450, View.Frame.Width - 20, 150))
             {
                 Text = "Any Purchase will be remembered while the application is Active, Suspended, Resume, but cleared when the Application is launched.  \nExamine the application source code for more details on calls used to respond and monitor purchases.",
                 Font = UIFont.SystemFontOfSize(18),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.All,
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
             });
-            
-            scroll.AddSubview(new UILabel(new CGRect(10, 600, View.Frame.Width, 50))
+
+            subscriptionStatusLabel = new UILabel(new CGRect(10, 600, View.Frame.Width - 20, 50))
             {
                 Text = "Subscription is: Inactive",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
-            });
+            };
+            scrollView.AddSubview(subscriptionStatusLabel);
 
-            scroll.AddSubview(subscribeButton);
+            scrollView.AddSubview(subscribeButton);
             
-            this.View.AddSubview(scroll);
+            this.View.AddSubview(scrollView);
 
-            NamiEntitlementManager_Nami_Swift_1494.RegisterChangeHandlerWithEntitlementsChangedHandler(new NamiEntitlementManager(), (entitlements) =>
+            NamiEntitlementManager.RegisterChangeHandlerWithEntitlementsChangedHandler((entitlements) =>
             {
                 Console.WriteLine("Entitlements Change Listener triggered");
 
@@ -159,12 +172,10 @@ namespace Xamarin_iOS_BasicSample
                     pur.Add(n);
                 }
 
-                EvaluateLastPurchaseEvent(pur, state, error.ToString());
+                EvaluateLastPurchaseEvent(pur, state, error?.ToString());
             });
 
-            HandleActiveEntitlements(NamiEntitlementManager_Nami_Swift_1494.ActiveEntitlements(new NamiEntitlementManager()).ToList());
-            
-            LogCustomerJourneyState();
+            HandleActiveEntitlements(NamiEntitlementManager.ActiveEntitlements().ToList());
         }
 
         private void EvaluateLastPurchaseEvent(List<NamiPurchase> activePurchases, NamiPurchaseState namiPurchaseState,string errorMsg)
@@ -183,38 +194,27 @@ namespace Xamarin_iOS_BasicSample
             else
             {
                 Console.WriteLine($"Reason : {errorMsg}");
-            }
-            
+            }            
         }
 
         private void HandleActiveEntitlements(List<NamiEntitlement> activeEntitlements)
         {
-            /*
-            var isActive = false
-        var textResId = R.string.subscription_status_inactivate
-        if (activeEntitlements.isNotEmpty())
+            if (activeEntitlements?.Count > 0)
             {
-                isActive = true
-            textResId = R.string.subscription_status_active
-        }
-            binding.subscriptionStatus.apply {
-                text = getText(textResId)
-                isEnabled = isActive
+                subscriptionStatusLabel.Text = "Subscription is: Active";
             }
-            */
         }
 
         private void LogCustomerJourneyState()
         {
-            var state = NamiCustomerManager_Nami_Swift_1457.CurrentCustomerJourneyState;
+            var state = NamiCustomerManager.CurrentCustomerJourneyState;
 
             Console.WriteLine("currentCustomerJourneyState");
 
-            Console.WriteLine($"    formerSubscriber ==> ${state.FormerSubscriber()}");
-            Console.WriteLine($"    inGracePeriod ==> ${state.InGracePeriod()}");
-            Console.WriteLine($"    inIntroOfferPeriod ==> ${state.InIntroOfferPeriod()}");
-            Console.WriteLine($"    inTrialPeriod ==> ${state.InTrialPeriod()}");
-            
+            Console.WriteLine($"    formerSubscriber ==> ${state?.FormerSubscriber()}");
+            Console.WriteLine($"    inGracePeriod ==> ${state?.InGracePeriod()}");
+            Console.WriteLine($"    inIntroOfferPeriod ==> ${state?.InIntroOfferPeriod()}");
+            Console.WriteLine($"    inTrialPeriod ==> ${state?.InTrialPeriod()}");            
         }
 
         private void LogActiveEntitlements(List<NamiEntitlement> activeEntitlements)
@@ -229,9 +229,9 @@ namespace Xamarin_iOS_BasicSample
 
         private void OnSubscribeClicked(object sender, EventArgs e)
         {
-            if (NamiPaywallManager_Nami_Swift_1660.CanRaisePaywall)
+            if (NamiPaywallManager.CanRaisePaywall)
             {
-                NamiPaywallManager_Nami_Swift_1660.RaisePaywallFromVC(new NamiPaywallManager(),this);
+                NamiPaywallManager.RaisePaywallFromVC(this);
             }
         }
 

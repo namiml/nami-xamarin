@@ -1,35 +1,33 @@
 ﻿using System;
 using CoreGraphics;
 using UIKit;
-using Binding;
+using NamiML;
 
 namespace Xamarin_iOS_BasicSample
 {
     public class AboutViewController : UIViewController
     {
-        NamiMLManager nami;
-
         public override void ViewWillAppear(bool animated)
         {
             base.ViewWillAppear(animated);
 
-            NamiMLManager_Nami_Swift_1607.EnterCoreContentWithLabel(nami, "About");
+            NamiMLManager.EnterCoreContentWithLabel("About");
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-
-            //  nami = new NamiMLManager();
             
             this.Title = "About";
-            this.View.BackgroundColor = UIColor.White;
+
+            View.BackgroundColor = UIColor.White;
 
             this.View.AddSubview(new UILabel(new CGRect(10, 100, View.Frame.Width, 50))
             {
                 Text = "Introduction",
                 Font = UIFont.BoldSystemFontOfSize(24),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.FlexibleWidth
             });
 
@@ -38,6 +36,7 @@ namespace Xamarin_iOS_BasicSample
                 Text = "This application demonstrates common calls used in a Nami enabled application.",
                 Font = UIFont.SystemFontOfSize(18),
                 TextAlignment = UITextAlignment.Left,
+                TextColor = UIColor.Black,
                 AutoresizingMask = UIViewAutoresizing.All,
                 LineBreakMode = UILineBreakMode.WordWrap,
                 Lines = 0
@@ -48,7 +47,7 @@ namespace Xamarin_iOS_BasicSample
         {
             base.ViewWillDisappear(animated);
 
-            NamiMLManager_Nami_Swift_1607.ExitCoreContentWithLabel(nami, "About");
+            NamiMLManager.ExitCoreContentWithLabel("About");
         }
     }
 }

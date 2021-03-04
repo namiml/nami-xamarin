@@ -1,6 +1,6 @@
 using ObjCRuntime;
 
-namespace Binding
+namespace NamiML
 {
     [Native]
     public enum NamiAnalyticsActionType : long

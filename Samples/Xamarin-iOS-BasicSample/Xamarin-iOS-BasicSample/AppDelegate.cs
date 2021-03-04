@@ -1,6 +1,6 @@
 ﻿using Foundation;
 using UIKit;
-using Binding;
+using NamiML;
 
 namespace Xamarin_iOS_BasicSample
 {
@@ -33,42 +33,44 @@ namespace Xamarin_iOS_BasicSample
 
         private void NamiSetup()
         {
-            // For testing we'll bypass StoreKit, so you don't have to run the app on a device to test purchases.
-            // You may want to include some ability to toggle this on for testers of your application.
-            //NamiPurchaseManager.bypassStore(bypass: true);
-            
             // Makes sure when the app is re-run that any stored bypass purchases are cleared out so we can retry purchases
-            // Note this cannot clear out StoreKit sandbox or regular purchaes, which Apple controls.
+            // Note this cannot clear out StoreKit sandbox or regular purchases, which Apple controls.
             // This only clears out purchases made when bypassStoreKit is enabled.
             NamiPurchaseManager.ClearBypassStorePurchases();
 
             // This is the appID for a Nami test application with already configured products and paywalls, contact Nami to obtain an Application ID for your own application.
             var namiConfig = NamiConfiguration.ConfigurationForAppPlatformID("002e2c49-7f66-4d22-a05c-1dc9f2b7f2af");
+
+            // For testing we'll bypass StoreKit, so you don't have to run the app on a device to test purchases.
+            // You may want to include some ability to toggle this on for testers of your application.
+            namiConfig.BypassStore = true;
+
             namiConfig.LogLevel = NamiLogLevel.Warn;
-            nami = Nami.Shared;
-            Nami_Nami_Swift_1345.ConfigureWithNamiConfig(nami, namiConfig);
+            Nami.ConfigureWithNamiConfig(namiConfig);
 
-
-
-            NamiPaywallManager_Nami_Swift_1660.RegisterWithApplicationSignInProvider(new NamiPaywallManager(),applicationSignInProvider: (viewController,message,paywall) => {
+            NamiPaywallManager.RegisterWithApplicationSignInProvider(applicationSignInProvider: (viewController, message, paywall) => {
                 var okAlertController = UIAlertController.Create("Sign In", message, UIAlertControllerStyle.Alert);
 
                 //Add Action
                 okAlertController.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
 
-                // Present Alert
-                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(okAlertController, true, null);
+                // Present Alert    
+                UIApplication.SharedApplication.KeyWindow.RootViewController.PresentedViewController.PresentViewController(okAlertController, true, null);
 
-                nami.SetExternalIdentifierWithExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
+                Nami.SetExternalIdentifierWithExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
             });
-            var s = new string("");
-            NamiPaywallManager_Nami_Swift_1660.RegisterApplicationAutoRaisePaywallBlocker(null, () => { return true; });
-            
-            //NamiPaywallManager.register {
-            //            (fromVC, developerPaywallID, paywallMetadata) in
-            // Present any sign in UI from here to validate the user has an account already in your system.
-        }
 
-}
+            NamiPurchaseManager.RegisterWithPurchasesChangedHandler(changeHandler: (purchases, purchaseState, error) => {
+                foreach (NamiPurchase purchase in purchases)
+                {
+                    var expires = purchase.Expires;
+                }
+        });
+
+            NamiPurchaseManager.IsSKUIDPurchased("nami_monthly");
+
+            NamiPaywallManager.RegisterApplicationAutoRaisePaywallBlocker(() => { return true; });
+        }
+    }
 }
 
