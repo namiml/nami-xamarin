@@ -1,0 +1,33 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin-iOS-BasicSample", "Xamarin-iOS-BasicSample\Xamarin-iOS-BasicSample.csproj", "{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NamiSDKComboBinding", "..\..\NamiSDKComboBinding\NamiSDKComboBinding\NamiSDKComboBinding.csproj", "{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|iPhoneSimulator = Debug|iPhoneSimulator
+		Release|iPhoneSimulator = Release|iPhoneSimulator
+		Debug|iPhone = Debug|iPhone
+		Release|iPhone = Release|iPhone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Debug|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Debug|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Debug|iPhone.ActiveCfg = Debug|iPhone
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Debug|iPhone.Build.0 = Debug|iPhone
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Release|iPhone.ActiveCfg = Release|iPhone
+		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F}.Release|iPhone.Build.0 = Release|iPhone
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}.Release|iPhone.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
