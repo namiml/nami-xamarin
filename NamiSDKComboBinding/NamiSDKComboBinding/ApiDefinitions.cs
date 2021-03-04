@@ -36,9 +36,9 @@ namespace NamiML
     [DisableDefaultCtor]
     interface Nami
     {
-		// +(void)configureWithNamiConfig:(NamiConfiguration * _Nonnull)namiConfig;
+		// +(void)configureXamarinWithNamiConfig:(NamiConfiguration * _Nonnull)namiConfig;
 		[Static]
-		[Export("configureWithNamiConfig:")]
+		[Export("configureXamarinWithNamiConfig:")]
 		void ConfigureWithNamiConfig(NamiConfiguration namiConfig);
 
 		// +(void)registerNamiLoggerWithLogger:(id<NamiLoggerClient> _Nonnull)logger;
@@ -211,10 +211,10 @@ namespace NamiML
 		[Export("clearAllEntitlements")]
 		void ClearAllEntitlements();
 
-		// +(void)registerChangeHandlerWithEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
+		// +(void)registerEntitlementsChangedHandler:(void (^ _Nullable)(NSArray<NamiEntitlement *> * _Nonnull))changeHandler;
 		[Static]
-		[Export("registerChangeHandlerWithEntitlementsChangedHandler:")]
-		void RegisterWithEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
+		[Export("registerEntitlementsChangedHandler:")]
+		void RegisterEntitlementsChangedHandler([NullAllowed] Action<NSArray<NamiEntitlement>> changeHandler);
 	}
 
 	// @interface NamiEntitlementSetter : NSObject
@@ -503,8 +503,8 @@ namespace NamiML
 
         // +(void)registerWithPurchasesChangedHandler:(void (^ _Nullable)(NSArray<NamiPurchase *> * _Nonnull, enum NamiPurchaseState, NSError * _Nullable))changeHandler;
         [Static]
-        [Export("registerWithPurchasesChangedHandler:")]
-        void RegisterWithPurchasesChangedHandler([NullAllowed] Action<NSArray<NamiPurchase>, NamiPurchaseState, NSError> changeHandler);
+        [Export("registerPurchasesChangedHandler:")]
+        void RegisterPurchasesChangedHandler([NullAllowed] Action<NSArray<NamiPurchase>, NamiPurchaseState, NSError> changeHandler);
 
         // +(void)restorePurchasesWithHandler:(void (^ _Nonnull)(BOOL, NSError * _Nullable))handler;
         [Static]
