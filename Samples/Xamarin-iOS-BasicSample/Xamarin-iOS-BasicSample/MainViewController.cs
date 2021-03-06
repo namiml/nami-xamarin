@@ -147,7 +147,7 @@ namespace Xamarin_iOS_BasicSample
             
             this.View.AddSubview(scrollView);
 
-            NamiEntitlementManager.RegisterChangeHandlerWithEntitlementsChangedHandler((entitlements) =>
+            NamiEntitlementManager.RegisterEntitlementsChangedHandler((entitlements) =>
             {
                 Console.WriteLine("Entitlements Change Listener triggered");
 
@@ -163,7 +163,7 @@ namespace Xamarin_iOS_BasicSample
                 HandleActiveEntitlements(ent);
             });
 
-            NamiPurchaseManager.RegisterWithPurchasesChangedHandler((purchases, state, error) => {
+            NamiPurchaseManager.RegisterPurchasesChangedHandler((purchases, state, error) => {
 
                 var pur = new List<NamiPurchase>();
 

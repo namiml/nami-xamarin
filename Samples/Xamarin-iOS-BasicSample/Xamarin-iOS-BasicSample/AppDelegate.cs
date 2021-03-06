@@ -48,7 +48,7 @@ namespace Xamarin_iOS_BasicSample
             namiConfig.LogLevel = NamiLogLevel.Warn;
             Nami.ConfigureWithNamiConfig(namiConfig);
 
-            NamiPaywallManager.RegisterWithApplicationSignInProvider(applicationSignInProvider: (viewController, message, paywall) => {
+            NamiPaywallManager.RegisterSignInHandler((viewController, message, paywall) => {
                 var okAlertController = UIAlertController.Create("Sign In", message, UIAlertControllerStyle.Alert);
 
                 //Add Action
@@ -57,10 +57,10 @@ namespace Xamarin_iOS_BasicSample
                 // Present Alert    
                 UIApplication.SharedApplication.KeyWindow.RootViewController.PresentedViewController.PresentViewController(okAlertController, true, null);
 
-                Nami.SetExternalIdentifierWithExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
+                Nami.SetExternalIdentifier(TEST_EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
             });
 
-            NamiPurchaseManager.RegisterWithPurchasesChangedHandler(changeHandler: (purchases, purchaseState, error) => {
+            NamiPurchaseManager.RegisterPurchasesChangedHandler(changeHandler: (purchases, purchaseState, error) => {
                 foreach (NamiPurchase purchase in purchases)
                 {
                     var expires = purchase.Expires;
@@ -69,7 +69,7 @@ namespace Xamarin_iOS_BasicSample
 
             NamiPurchaseManager.IsSKUIDPurchased("nami_monthly");
 
-            NamiPaywallManager.RegisterApplicationAutoRaisePaywallBlocker(() => { return true; });
+            NamiPaywallManager.RegisterAllowAutoRaisePaywallHandler(() => { return true; });
         }
     }
 }
