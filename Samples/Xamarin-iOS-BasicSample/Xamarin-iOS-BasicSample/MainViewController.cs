@@ -231,7 +231,7 @@ namespace Xamarin_iOS_BasicSample
         {
             if (NamiPaywallManager.CanRaisePaywall)
             {
-                NamiPaywallManager.RaisePaywallFromVC(this);
+                NamiPaywallManager.RaisePaywall(this);
             }
         }
 

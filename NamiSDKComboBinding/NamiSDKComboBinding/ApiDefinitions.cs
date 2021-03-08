@@ -410,12 +410,12 @@ namespace NamiML
 		// +(void)raisePaywallFromVC:(UIViewController * _Nullable)fromVC;
 		[Static]
 		[Export("raisePaywallFromVC:")]
-		void RaisePaywallFromVC([NullAllowed] UIViewController fromVC);
+		void RaisePaywall([NullAllowed] UIViewController fromVC);
 
 		// +(void)raisePaywallWithDeveloperPaywallID:(NSString * _Nonnull)developerPaywallID fromVC:(UIViewController * _Nullable)fromVC;
 		[Static]
 		[Export("raisePaywallWithDeveloperPaywallID:fromVC:")]
-		void RaisePaywallWithDeveloperPaywallID(string developerPaywallID, [NullAllowed] UIViewController fromVC);
+		void RaisePaywallByDeveloperPaywallID(string developerPaywallID, [NullAllowed] UIViewController fromVC);
 
 		// +(void)dismissNamiPaywallIfOpenWithAnimated:(BOOL)animated completion:(void (^ _Nonnull)(void))completion;
 		[Static]
