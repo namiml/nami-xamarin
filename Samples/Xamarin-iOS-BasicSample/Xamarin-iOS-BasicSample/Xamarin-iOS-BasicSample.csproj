@@ -71,9 +71,6 @@
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
-      <PackageReference Include="NamiML.SDK">
-        <Version>1.0.0</Version>
-      </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -112,6 +109,12 @@
     </ItemGroup>
     <ItemGroup>
       <BundleResource Include="Resources\nami_logo_white.png" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\NamiSDKComboBinding\NamiSDKComboBinding\NamiSDKComboBinding.csproj">
+        <Project>{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}</Project>
+        <Name>NamiSDKComboBinding</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
