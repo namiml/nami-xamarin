@@ -229,7 +229,7 @@ namespace Xamarin_iOS_BasicSample
 
         private void OnSubscribeClicked(object sender, EventArgs e)
         {
-            NamiPaywallManager.PreparePaywallForDisplayWithBackgroundImageRequired(true, 10.0, (success, error) =>
+            NamiPaywallManager.PreparePaywallForDisplay(true, 10.0, (success, error) =>
            {
                if (success)
                {

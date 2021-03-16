@@ -410,7 +410,7 @@ namespace NamiML
 		// +(void)preparePaywallForDisplay:(NSString *)developerPaywallID backgroundImageRequired: (Bool) backgroundImageRequired imageFetchTimeout: (Double) imageFetchTimeout :(void (^ _Nonnull)(Bool, NSerror*))prepareHandler;
 		[Static]
 		[Export("preparePaywallForDisplayWithBackgroundImageRequired:imageFetchTimeout:prepareHandler:")]
-		void PreparePaywallForDisplayWithBackgroundImageRequired(bool backgroundImageRequired, double imageFetchTimeout, Action<bool, NSError> prepareHandler);
+		void PreparePaywallForDisplay(bool backgroundImageRequired, double imageFetchTimeout, Action<bool, NSError> prepareHandler);
 
 		// +(void)preparePaywallForDisplay: (Bool) backgroundImageRequired imageFetchTimeout: (Double) imageFetchTimeout :(void (^ _Nonnull)(Bool, NSerror*))prepareHandler;
 		[Static]
