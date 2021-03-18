@@ -13,7 +13,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>NamiML.SDK</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Authors>Nami ML</Authors>
     <Copyright>2021</Copyright>
     <PackageIconUrl>https://nami-brand.s3.amazonaws.com/images/Nami.SDK.2.0.120x137.png</PackageIconUrl>
@@ -23,6 +23,12 @@
     <Summary>Nami SDK Xamarin iOS Binding Library</Summary>
     <Title>Nami SDK Xamarin iOS Binding Library</Title>
     <Description>Xamarin iOS Binding Library for Nami SDK. Subscription and In-App Purchases Marketing Platform. Create no-code purchase journies, subscription management and customer CRM, and analytics. Simple integration. Monetize your App.</Description>
+    <PackageReleaseNotes>Added
+
+- Improved control over displaying paywalls and more clear errors when paywall cannot display with new preparePaywallForDisplay and preparePaywallForDisplayByDeveloperPaywallID methods
+
+SDK Version
+- nami-apple SDK v2.6.0</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
