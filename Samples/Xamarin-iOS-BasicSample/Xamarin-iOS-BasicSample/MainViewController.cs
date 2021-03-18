@@ -229,10 +229,18 @@ namespace Xamarin_iOS_BasicSample
 
         private void OnSubscribeClicked(object sender, EventArgs e)
         {
-            if (NamiPaywallManager.CanRaisePaywall)
-            {
-                NamiPaywallManager.RaisePaywall(this);
-            }
+            NamiPaywallManager.PreparePaywallForDisplay(true, 10.0, (success, error) =>
+           {
+               if (success)
+               {
+                   NamiPaywallManager.RaisePaywall(this);
+               }
+               else
+               {
+                   Console.WriteLine($"Error preparing paywall for display: {error.LocalizedDescription}");
+               }
+           }); 
+            
         }
 
         private void OnAboutClicked(object sender, EventArgs e)
