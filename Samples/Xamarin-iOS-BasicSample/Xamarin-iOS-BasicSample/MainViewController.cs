@@ -237,7 +237,7 @@ namespace Xamarin_iOS_BasicSample
                }
                else
                {
-                   Console.WriteLine($"Error in image load for paywall: {error.LocalizedDescription}");
+                   Console.WriteLine($"Error preparing paywall for display: {error.LocalizedDescription}");
                }
            }); 
             
