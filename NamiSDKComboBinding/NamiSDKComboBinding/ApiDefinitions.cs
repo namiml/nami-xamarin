@@ -360,6 +360,10 @@ namespace NamiML
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull body;
 		[Export ("body")]
 		string Body { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull purchaseTerms;
+		[Export("purchaseTerms")]
+		string PurchaseTerms { get; }
 	}
 
 	// @interface NamiPaywallManager : NSObject
@@ -431,6 +435,11 @@ namespace NamiML
 		[Static]
 		[Export("dismissNamiPaywallIfOpenWithAnimated:completion:")]
 		void DismissNamiPaywallIfOpen(bool animated, Action completion);
+
+		// +(NSString *)processSmartTextWithText:(NSString *)text dataStores:(NSObject *)dataStores;
+		[Static]
+		[Export("processSmartTextWithText:text:dataStores:")]
+		void ProcessSmartText(string text, NSObject completion);
 	}
 
 	// @interface NamiPurchase : NSObject
@@ -596,6 +605,26 @@ namespace NamiML
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull skuID;
 		[Export ("skuID")]
 		string SkuID { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull namiDisplayText;
+		[Export("namiDisplayText")]
+		string DisplayText { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull namiSubDisplayText;
+		[Export("namiSubDisplayText")]
+		string DisplaySubText { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull localizedCurrentPrice;
+		[Export("localizedCurrentPrice")]
+		string LocalizedCurrentPrice { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull localizedBasePrice;
+		[Export("localizedBasePrice")]
+		string LocalizedBasePrice { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull localizedIntroductoryPrice;
+		[Export("localizedIntroductoryPrice")]
+		string LocalizedIntroductoryPrice { get; }
 
 		// @property (copy, nonatomic) NSString * _Nonnull storeID;
 		[Export ("storeID")]
