@@ -111,9 +111,9 @@
       <BundleResource Include="Resources\nami_logo_white.png" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\..\..\NamiSDKComboBinding\NamiSDKComboBinding\NamiSDKComboBinding.csproj">
+      <ProjectReference Include="..\..\src\xamarin-ios-binding\xamarin-ios-binding.csproj">
         <Project>{BAAE8741-03C3-4856-A7A6-150D36DC2AA9}</Project>
-        <Name>NamiSDKComboBinding</Name>
+        <Name>xamarin-ios-binding</Name>
       </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

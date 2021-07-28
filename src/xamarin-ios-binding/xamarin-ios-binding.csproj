@@ -56,7 +56,7 @@ SDK Version
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
-    <NativeReference Include="..\..\Nami.framework">
+    <NativeReference Include="..\..\..\Nami.framework">
       <Kind>Framework</Kind>
       <Frameworks>Foundation UIKit StoreKit</Frameworks>
     </NativeReference>
