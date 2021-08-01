@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xamarin-ios-sample", "sampl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xamarin-android-binding", "src\xamarin-android-binding\xamarin-android-binding.csproj", "{75919AC7-1C7D-43B9-B9AF-A196B1F888D5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xamarin-android-sample", "samples\xamarin-android-sample\xamarin-android-sample.csproj", "{100309B3-71BD-4874-B86F-0E412E74BCB0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,18 @@ Global
 		{75919AC7-1C7D-43B9-B9AF-A196B1F888D5}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{75919AC7-1C7D-43B9-B9AF-A196B1F888D5}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{75919AC7-1C7D-43B9-B9AF-A196B1F888D5}.Release|iPhone.Build.0 = Release|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{100309B3-71BD-4874-B86F-0E412E74BCB0}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,5 +84,6 @@ Global
 		{BAAE8741-03C3-4856-A7A6-150D36DC2AA9} = {110875F7-6223-4321-A081-4F70FFAFE564}
 		{C4B1B17E-C453-4E83-8F3B-96E433EBCE6F} = {EFC41ED4-515C-4901-B720-556AE14EE989}
 		{75919AC7-1C7D-43B9-B9AF-A196B1F888D5} = {110875F7-6223-4321-A081-4F70FFAFE564}
+		{100309B3-71BD-4874-B86F-0E412E74BCB0} = {EFC41ED4-515C-4901-B720-556AE14EE989}
 	EndGlobalSection
 EndGlobal
