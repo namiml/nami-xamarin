@@ -1,4 +1,4 @@
 ﻿<resources>
-    <string name="app_name">xamarin_android_sample</string>
-    <string name="action_settings">Settings</string>
+	<string name="app_name">App2</string>
+	<string name="action_settings">Settings</string>
 </resources>

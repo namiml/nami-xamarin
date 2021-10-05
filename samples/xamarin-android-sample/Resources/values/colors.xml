@@ -1,6 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2c3e50</color>
-    <color name="colorPrimaryDark">#1B3147</color>
-    <color name="colorAccent">#3498db</color>
+	<color name="colorPrimary">#416d7c</color>
+	<color name="colorPrimaryDark">#264652</color>
+	<color name="colorAccent">#417C6D</color>
+	<color name="textColorSecondary">#828282</color>
+	<color name="subscription_status">#D32F2F</color>
+	<color name="subscription_active">#388E3C</color>
+	<color name="subscription_inactive">#D32F2F</color>
+	<color name="colorOnPrimary">#FFFFFF</color>
 </resources>
