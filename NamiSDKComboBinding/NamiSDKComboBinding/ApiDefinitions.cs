@@ -360,6 +360,14 @@ namespace NamiML
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull body;
 		[Export ("body")]
 		string Body { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull purchaseTerms;
+		[Export("purchaseTerms")]
+		string PurchaseTerms { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull purchaseTerms;
+		[NullAllowed, Export("namiSkus")]
+		NSArray<NamiSKU> NamiSkus { get; }
 	}
 
 	// @interface NamiPaywallManager : NSObject
@@ -407,6 +415,11 @@ namespace NamiML
 		[Export("canRaisePaywall")]
 		bool CanRaisePaywall { get; }
 
+		// +(UIViewController *)currentNamiPaywallViewController __attribute__((warn_unused_result("")));
+		[Static]
+		[Export("currentNamiPaywallViewController")]
+		UIViewController CurrentNamiPaywallViewController { get; }
+
 		// +(void)preparePaywallForDisplay:(NSString *)developerPaywallID backgroundImageRequired: (Bool) backgroundImageRequired imageFetchTimeout: (Double) imageFetchTimeout :(void (^ _Nonnull)(Bool, NSerror*))prepareHandler;
 		[Static]
 		[Export("preparePaywallForDisplayWithBackgroundImageRequired:imageFetchTimeout:prepareHandler:")]
@@ -426,6 +439,11 @@ namespace NamiML
 		[Static]
 		[Export("raisePaywallWithDeveloperPaywallID:fromVC:")]
 		void RaisePaywallByDeveloperPaywallID(string developerPaywallID, [NullAllowed] UIViewController fromVC);
+
+		// +(NSString)processSmartTextWithText:(NSString * _Nonnull)originalText dataStores:(NSArray<NSObject *> * _Nullable)fromVC;
+		[Static]
+		[Export("processSmartTextWithText:dataStores:")]
+        void ProcessSmartTextWithText(string originalText, [NullAllowed] NSArray<NSObject> dataStores);
 
 		// +(void)dismissNamiPaywallIfOpenWithAnimated:(BOOL)animated completion:(void (^ _Nonnull)(void))completion;
 		[Static]
@@ -520,6 +538,11 @@ namespace NamiML
         [Static]
 		[Export ("restorePurchasesWithHandler:")]
 		void RestorePurchasesWithHandler (Action<bool, NSError> handler);
+
+		// +(void)registerRestorePurchasesHandlerWithRestorePurchasesStateHandler:(void (enum NamiRestorePurchasesState, NSArray<NamiPurchase *> * _Nonnull, NSArray<NamiPurchase *> * _Nonnull, NSError * _Nullable))changeHandler;
+		[Static]
+		[Export("registerRestorePurchasesHandlerWithRestorePurchasesStateHandler:")]
+		void RegisterRestorePurchasesHandlerWithRestorePurchasesStateHandler(Action<int, NSArray<NamiPurchase>, NSArray<NamiSKU>, NSError> handler);
 
 		// +(void)consumePurchasedSKUWithSkuID:(NSString * _Nonnull)skuID;
 		[Static]
