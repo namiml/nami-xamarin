@@ -113,6 +113,10 @@ namespace NamiML
 		[Export ("appPlatformID")]
 		string AppPlatformID { get; }
 
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull namiLanguageCode;
+		[Export("namiLanguageCode")]
+		string NamiLanguageCode { get; set; }
+
 		// @property (nonatomic) BOOL passiveMode;
 		[Export ("passiveMode")]
 		bool PassiveMode { get; set; }
