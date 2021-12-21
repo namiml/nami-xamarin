@@ -447,7 +447,7 @@ namespace NamiML
 		// +(NSString)processSmartTextWithText:(NSString * _Nonnull)originalText dataStores:(NSArray<NSObject *> * _Nullable)fromVC;
 		[Static]
 		[Export("processSmartTextWithText:dataStores:")]
-        void ProcessSmartTextWithText(string originalText, [NullAllowed] NSArray<NSObject> dataStores);
+        void ProcessSmartText(string originalText, [NullAllowed] NSArray<NSObject> dataStores);
 
 		// +(void)dismissNamiPaywallIfOpenWithAnimated:(BOOL)animated completion:(void (^ _Nonnull)(void))completion;
 		[Static]
