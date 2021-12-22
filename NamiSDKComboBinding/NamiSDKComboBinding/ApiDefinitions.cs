@@ -546,7 +546,7 @@ namespace NamiML
 		// +(void)registerRestorePurchasesHandlerWithRestorePurchasesStateHandler:(void (enum NamiRestorePurchasesState, NSArray<NamiPurchase *> * _Nonnull, NSArray<NamiPurchase *> * _Nonnull, NSError * _Nullable))changeHandler;
 		[Static]
 		[Export("registerRestorePurchasesHandlerWithRestorePurchasesStateHandler:")]
-		void RegisterRestorePurchasesHandler(Action<int, NSArray<NamiPurchase>, NSArray<NamiPurchase>, NSError> handler);
+		void RegisterRestorePurchasesHandler(Action<NamiRestorePurchasesState, NSArray<NamiPurchase>, NSArray<NamiPurchase>, NSError> handler);
 
 		// +(void)consumePurchasedSKUWithSkuID:(NSString * _Nonnull)skuID;
 		[Static]
