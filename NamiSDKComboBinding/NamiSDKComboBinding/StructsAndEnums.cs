@@ -80,6 +80,14 @@ namespace NamiML
     }
 
     [Native]
+    public enum NamiRestorePurchasesState : long
+    {
+        Started = 0,
+        Finished = 1,
+        Error = 2      
+    }
+
+    [Native]
     public enum NamiSKUType : long
     {
         Unknown = 0,
