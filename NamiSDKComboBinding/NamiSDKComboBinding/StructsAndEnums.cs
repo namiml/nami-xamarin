@@ -6,7 +6,7 @@ namespace NamiML
     public enum NamiAnalyticsActionType : long
     {
         paywallRaise = 0,
-        urchaseActivity = 1
+        purchaseActivity = 1
     }
 
     [Native]
