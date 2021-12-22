@@ -13,7 +13,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>NamiML.SDK</PackageId>
-    <PackageVersion>1.1.0</PackageVersion>
+    <PackageVersion>1.2.0</PackageVersion>
     <Authors>Nami ML</Authors>
     <Copyright>2021</Copyright>
     <PackageIconUrl>https://nami-brand.s3.amazonaws.com/images/Nami.SDK.2.0.120x137.png</PackageIconUrl>

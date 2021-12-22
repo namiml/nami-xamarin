@@ -113,6 +113,10 @@ namespace NamiML
 		[Export ("appPlatformID")]
 		string AppPlatformID { get; }
 
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull namiLanguageCode;
+		[Export("namiLanguageCode")]
+		string NamiLanguageCode { get; set; }
+
 		// @property (nonatomic) BOOL passiveMode;
 		[Export ("passiveMode")]
 		bool PassiveMode { get; set; }
@@ -360,6 +364,14 @@ namespace NamiML
 		// @property (readonly, copy, nonatomic) NSString * _Nonnull body;
 		[Export ("body")]
 		string Body { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull purchaseTerms;
+		[Export("purchaseTerms")]
+		string PurchaseTerms { get; }
+
+		// @property (readonly, copy, nonatomic) NSString * _Nonnull purchaseTerms;
+		[NullAllowed, Export("namiSkus")]
+		NSArray<NamiSKU> NamiSkus { get; }
 	}
 
 	// @interface NamiPaywallManager : NSObject
@@ -407,6 +419,11 @@ namespace NamiML
 		[Export("canRaisePaywall")]
 		bool CanRaisePaywall { get; }
 
+		// +(UIViewController *)currentNamiPaywallViewController __attribute__((warn_unused_result("")));
+		[Static]
+		[Export("currentNamiPaywallViewController")]
+		UIViewController CurrentNamiPaywallViewController { get; }
+
 		// +(void)preparePaywallForDisplay:(NSString *)developerPaywallID backgroundImageRequired: (Bool) backgroundImageRequired imageFetchTimeout: (Double) imageFetchTimeout :(void (^ _Nonnull)(Bool, NSerror*))prepareHandler;
 		[Static]
 		[Export("preparePaywallForDisplayWithBackgroundImageRequired:imageFetchTimeout:prepareHandler:")]
@@ -426,6 +443,11 @@ namespace NamiML
 		[Static]
 		[Export("raisePaywallWithDeveloperPaywallID:fromVC:")]
 		void RaisePaywallByDeveloperPaywallID(string developerPaywallID, [NullAllowed] UIViewController fromVC);
+
+		// +(NSString)processSmartTextWithText:(NSString * _Nonnull)originalText dataStores:(NSArray<NSObject *> * _Nullable)fromVC;
+		[Static]
+		[Export("processSmartTextWithText:dataStores:")]
+        string ProcessSmartText(string originalText, [NullAllowed] NSArray<NamiSKU> dataStores);
 
 		// +(void)dismissNamiPaywallIfOpenWithAnimated:(BOOL)animated completion:(void (^ _Nonnull)(void))completion;
 		[Static]
@@ -520,6 +542,11 @@ namespace NamiML
         [Static]
 		[Export ("restorePurchasesWithHandler:")]
 		void RestorePurchasesWithHandler (Action<bool, NSError> handler);
+
+		// +(void)registerRestorePurchasesHandlerWithRestorePurchasesStateHandler:(void (enum NamiRestorePurchasesState, NSArray<NamiPurchase *> * _Nonnull, NSArray<NamiPurchase *> * _Nonnull, NSError * _Nullable))changeHandler;
+		[Static]
+		[Export("registerRestorePurchasesHandlerWithRestorePurchasesStateHandler:")]
+		void RegisterRestorePurchasesHandler(Action<NamiRestorePurchasesState, NSArray<NamiPurchase>, NSArray<NamiPurchase>, NSError> handler);
 
 		// +(void)consumePurchasedSKUWithSkuID:(NSString * _Nonnull)skuID;
 		[Static]
