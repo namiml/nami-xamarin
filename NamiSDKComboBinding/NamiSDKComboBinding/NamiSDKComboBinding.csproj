@@ -13,7 +13,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>NamiML.SDK</PackageId>
-    <PackageVersion>1.2.0</PackageVersion>
+    <PackageVersion>1.2.1</PackageVersion>
     <Authors>Nami ML</Authors>
     <Copyright>2021</Copyright>
     <PackageIconUrl>https://nami-brand.s3.amazonaws.com/images/Nami.SDK.2.0.120x137.png</PackageIconUrl>
@@ -28,7 +28,7 @@
 - Improved control over displaying paywalls and more clear errors when paywall cannot display with new preparePaywallForDisplay and preparePaywallForDisplayByDeveloperPaywallID methods
 
 SDK Version
-- nami-apple SDK v2.6.0</PackageReleaseNotes>
+- nami-apple SDK v2.9.3</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
