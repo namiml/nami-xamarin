@@ -13,7 +13,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>NamiML.SDK</PackageId>
-    <PackageVersion>1.2.0</PackageVersion>
+    <PackageVersion>1.2.2</PackageVersion>
     <Authors>Nami ML</Authors>
     <Copyright>2021</Copyright>
     <PackageIconUrl>https://nami-brand.s3.amazonaws.com/images/Nami.SDK.2.0.120x137.png</PackageIconUrl>
@@ -25,10 +25,16 @@
     <Description>Xamarin iOS Binding Library for Nami SDK. Subscription and In-App Purchases Marketing Platform. Create no-code purchase journies, subscription management and customer CRM, and analytics. Simple integration. Monetize your App.</Description>
     <PackageReleaseNotes>Added
 
-- Improved control over displaying paywalls and more clear errors when paywall cannot display with new preparePaywallForDisplay and preparePaywallForDisplayByDeveloperPaywallID methods
+Added NamiPaywallManager.currentNamiPaywallViewController to get the View Controller of an open paywall to enable displaying UI components while the paywall is open.
+Added registerRestorePurchasesHandler to enable reacting to the restore purchase process and displaying messages to the app user.
+Added language localization for paywalls, accessibility VoiceOver support, and new paywall layout controls.
+Support for Paywall Smart Text. Allows changing the text on purchase buttons and inserting data from SKUs in text fields.
+Add processSmartText method to NamiPaywallManager, allows you to process variables in your text that are filled in with data from SKUs.
+Added purchaseTerms and namiSkus to NamiPaywall to help with linked paywall construction.
+Added presentCodeRedemptionSheet to NamiPaywallManager. Use to allow redemption of iOS 14 offer codes.
 
 SDK Version
-- nami-apple SDK v2.6.0</PackageReleaseNotes>
+- nami-apple SDK v2.9.3</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
