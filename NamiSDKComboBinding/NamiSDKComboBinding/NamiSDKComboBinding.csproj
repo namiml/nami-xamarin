@@ -13,7 +13,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
     <PackOnBuild>true</PackOnBuild>
     <PackageId>NamiML.SDK</PackageId>
-    <PackageVersion>1.2.2</PackageVersion>
+    <PackageVersion>1.2.3</PackageVersion>
     <NoBindingEmbedding>true</NoBindingEmbedding>
     <Authors>Nami ML</Authors>
     <Copyright>2021</Copyright>
@@ -24,8 +24,8 @@
     <Summary>Nami SDK Xamarin iOS Binding Library</Summary>
     <Title>Nami SDK Xamarin iOS Binding Library</Title>
     <Description>Xamarin iOS Binding Library for Nami SDK. Subscription and In-App Purchases Marketing Platform. Create no-code purchase journies, subscription management and customer CRM, and analytics. Simple integration. Monetize your App.</Description>
-    <PackageReleaseNotes>Added
-
+    <PackageReleaseNotes>
+Now includes Nami XCFramework for wider Xcode compatibility.
 Added NamiPaywallManager.currentNamiPaywallViewController to get the View Controller of an open paywall to enable displaying UI components while the paywall is open.
 Added registerRestorePurchasesHandler to enable reacting to the restore purchase process and displaying messages to the app user.
 Added language localization for paywalls, accessibility VoiceOver support, and new paywall layout controls.
