@@ -20,9 +20,11 @@ https://www.nuget.org/packages/NamiML.SDK/
 
 ### Build from repository
 
-In order to build the Binding Library, you first need to download the correct version of the Nami SDK framework to be included.   The frameworks for building with Xamarin are available at https://packages.namiml.com/NamiSDK/Xamarin/v.v.v/Nami.framework.zip.
+In order to build the Binding Library, you first need to download the correct version of the Nami SDK framework to be included.   The frameworks for building with Xamarin are available at https://packages.namiml.com/NamiSDK/Xamarin/v.v.v/Nami.xcframework.zip.
 
 Please replace `v.v.v` with the correct version of the Xamarin binding you are trying to use.  Check out our releases for the latest.
+
+Note that for releases <= 1.2.2 the file name is `Nami.framework.zip` instead.
 
 Save the zip file to the root of this repository and then unzip it.
 
