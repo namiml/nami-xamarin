@@ -24,7 +24,7 @@
     <Summary>Nami SDK Xamarin iOS Binding Library</Summary>
     <Title>Nami SDK Xamarin iOS Binding Library</Title>
     <Description>Xamarin iOS Binding Library for Nami SDK. Subscription and In-App Purchases Marketing Platform. Create no-code purchase journies, subscription management and customer CRM, and analytics. Simple integration. Monetize your App.</Description>
-    <PackageReleaseNotes>Now includes Nami XCFramework for wider Xcode compatibility.
+    <PackageReleaseNotes>Version of Nami framewrok included compiled with Xcode 12 to increase compatibiilty with Xamarin bridge.
 
 SDK Version
 - nami-apple SDK v2.9.3</PackageReleaseNotes>
