@@ -2,6 +2,16 @@
 
 # nami-xamarin
 
+This repository is a community supported project provided by not maintained by Nami ML.
+
+Head over to the [Issues](https://github.com/namiml/nami-xamarin/issues) list to see known open issues with the binding libraries.
+
+Please feel free to contribute to the project by opening any new issues and creating pull requests with any proposed fixes!
+
+Any accepted PRs will receive 6 months free of our Pro plan.
+
+--- 
+
 Nami is the #1 Subscription and IAP Marketing platform.
 
 No need to learn the complexities of the StoreKit and Play Billing frameworks.  Integrate our SDK in minutes into your Xamarin app and start selling and growing your digital revenue today with our generous Free Tier.
