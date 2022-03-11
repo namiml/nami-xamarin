@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinForms_BasicSample.SubscribeView">
+
+    <StackLayout>
+        <Frame BackgroundColor="#2196F3" Padding="40, 40, 40, 40" CornerRadius="0">
+            <Label Text="Demo" FontSize="Title"/>
+        </Frame>
+        <StackLayout Margin="10, 20, 0, 0">
+            <Label Text="Introduction" FontSize="Header"/>
+            <Label Text="This application demonstrates common calls used in a Nami enabled application." FontSize="Body"/>
+        </StackLayout>
+        <StackLayout Margin="10, 20, 0, 0">
+            <Label Text="Instructions" FontSize="Header"/>
+            <Label Text="If you suspend and resume this app three times in the simulator, an example paywall will be raised - or you can use the Subscribe button below to raise the same paywall." FontSize="Body"/>
+        </StackLayout>
+        <StackLayout Margin="10, 20, 0, 0">
+            <Label Text="Important Info" FontSize="Header"/>
+            <Label Text="Any Purchase will be remembered while the application is Active, Suspended, Resume, but cleared when the Application is launched." FontSize="Body"/>
+            <Label Text="Examine the application source code for more details on calls used to respond and monitor purchases." FontSize="Body"/>
+        </StackLayout>
+
+    </StackLayout>
+    
+
+</ContentPage>

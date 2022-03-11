@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XamarinForms_BasicSample.MainPage">
+
+    <StackLayout>
+
+        <Frame BackgroundColor="#2196F3" Padding="40, 60, 40, 40" CornerRadius="0">
+            <Image Source="nami_logo_white.png" />
+        </Frame>
+        <StackLayout Margin="60, 20, 0, 0">
+            <Label Text="Start developing now" FontSize="Title"/>
+        </StackLayout>
+        
+
+        <StackLayout Orientation="Vertical" Padding="30">
+            <StackLayout>
+                <Button Text="About"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Clicked="OnAboutButtonClicked"
+                BackgroundColor="AliceBlue"
+                BorderColor="CadetBlue"
+                BorderWidth="1"
+                CornerRadius="5"
+                WidthRequest="150"
+                HeightRequest="75"/>
+            </StackLayout>
+
+            <StackLayout Margin="20">
+                <Button Text="Test Subscription"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                Clicked="OnSubscribeButtonClicked"
+                BackgroundColor="AliceBlue"
+                BorderColor="CadetBlue"
+                BorderWidth="1"
+                CornerRadius="5"
+                WidthRequest="150"
+                HeightRequest="75" />
+            </StackLayout>
+            
+        </StackLayout>
+        <StackLayout>
+            
+        </StackLayout>
+    </StackLayout>
+    
+
+</ContentPage>
