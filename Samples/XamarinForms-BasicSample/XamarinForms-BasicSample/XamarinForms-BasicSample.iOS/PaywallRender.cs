@@ -24,19 +24,30 @@ namespace XamarinForms_BasicSample.iOS
 
         UIScrollView scrollView;
         UILabel subscriptionStatusLabel;
+
+        //provide the external identifier for your customer
         private static String EXTERNAL_IDENTIFIER = "9a9999a9-99aa-99a9-aa99-999a999999a9";
+
+        //provide the app platform ID from your Nami account
         private static String NAMI_APP_PLATFORM_ID = "3d062066-9d3c-430e-935d-855e2c56dd8e";
 
-
+        /// <summary>
+        /// This method is overriden to provide our own setup for when the page is rendered. This method is called when the page or control is created.
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnElementChanged(VisualElementChangedEventArgs e)
         {
             base.OnElementChanged(e);
 
             try
             {
+                //call the method to setup the user interface and create the controls needed
                 SetupUserInterface();
+
+                //run the Nami setup 
                 NamiSetup();
 
+                //call to provide the customer identifier
                 Nami.SetExternalIdentifier(EXTERNAL_IDENTIFIER, NamiExternalIdentifierType.Uuid);
 
             }
@@ -47,7 +58,9 @@ namespace XamarinForms_BasicSample.iOS
         }
 
 
-
+        /// <summary>
+        /// This method sets up the user interface and creates the controls that should be rendered on the page
+        /// </summary>
         public void SetupUserInterface()
         {
             var titleView = new UIImageView(UIImage.FromBundle("nami_logo_white"))
@@ -107,6 +120,8 @@ namespace XamarinForms_BasicSample.iOS
                 HandleActiveEntitlements(ent);
             });
 
+            //register a handler to listen for changes 
+            //it is important to check the state of the purchase as there are multiple states that can result in this event getting triggered.
             NamiPurchaseManager.RegisterPurchasesChangedHandler((purchases, state, error) => {
 
                 var pur = new List<NamiPurchase>();
@@ -171,6 +186,15 @@ namespace XamarinForms_BasicSample.iOS
         }
 
         #region NamiML Events
+
+        //These are events set up to listen to or respond to various Nami events
+
+        /// <summary>
+        /// Evaluates current purchases and iterates through a list of active purchases for the customer
+        /// </summary>
+        /// <param name="activePurchases"></param>
+        /// <param name="namiPurchaseState"></param>
+        /// <param name="errorMsg"></param>
         private void EvaluateLastPurchaseEvent(List<NamiPurchase> activePurchases, NamiPurchaseState namiPurchaseState, string errorMsg)
         {
 
@@ -190,6 +214,10 @@ namespace XamarinForms_BasicSample.iOS
             }
         }
 
+        /// <summary>
+        /// Checks for active entitlements 
+        /// </summary>
+        /// <param name="activeEntitlements"></param>
         private void HandleActiveEntitlements(List<NamiEntitlement> activeEntitlements)
         {
             if (activeEntitlements?.Count > 0)
@@ -198,6 +226,9 @@ namespace XamarinForms_BasicSample.iOS
             }
         }
 
+        /// <summary>
+        /// Logs the customer journey through various subscription states in order to test and troubleshoot subscription processes
+        /// </summary>
         private void LogCustomerJourneyState()
         {
             var state = NamiCustomerManager.CurrentCustomerJourneyState;
@@ -211,6 +242,10 @@ namespace XamarinForms_BasicSample.iOS
 
         }
 
+        /// <summary>
+        /// Logs all active entitlements 
+        /// </summary>
+        /// <param name="activeEntitlements"></param>
         private void LogActiveEntitlements(List<NamiEntitlement> activeEntitlements)
         {
             Console.WriteLine("Active entitlements");
@@ -221,6 +256,11 @@ namespace XamarinForms_BasicSample.iOS
             }
         }
 
+        /// <summary>
+        /// Click event for the subscribe button.  Pops the paywall. 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnSubscribeClicked(object sender, EventArgs e)
         {
             NamiPaywallManager.PreparePaywallForDisplay(true, 10.0, (success, error) =>

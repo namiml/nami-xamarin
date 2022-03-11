@@ -83,6 +83,13 @@
     <ErrorReport>prompt</ErrorReport>
     <CodesignKey>Apple Development: Tiffany Ford (5B32WSQU69)</CodesignKey>
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <MtouchInterpreter>
+    </MtouchInterpreter>
+    <MtouchFastDev>false</MtouchFastDev>
+    <DeviceSpecificBuild>false</DeviceSpecificBuild>
+    <MtouchArch>ARM64</MtouchArch>
+    <MtouchLink>None</MtouchLink>
+    <MtouchNoSymbolStrip>false</MtouchNoSymbolStrip>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -147,10 +154,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="NamiML.SDK">
-      <Version>1.2.2</Version>
+      <Version>1.2.7</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.1" />
+    <PackageReference Include="Xamarin.Forms" Version="5.0.0.2337" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.7.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
