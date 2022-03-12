@@ -16,6 +16,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
+    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -104,7 +105,7 @@
       <Name>NamiML</Name>
     </ProjectReference>
     <ProjectReference Include="..\NamiML_Sample\NamiML_Sample.csproj">
-      <Project>{3351EAA9-8C29-4C07-986E-AC76F8CF88E4}</Project>
+      <Project>{DC5DC599-1932-46DD-81A3-5D9D0F591502}</Project>
       <Name>NamiML_Sample</Name>
     </ProjectReference>
   </ItemGroup>
