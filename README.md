@@ -55,7 +55,7 @@ In order to build the Binding Library, you first need to download the correct ve
 
 Please replace `v.v.v` with the correct version of the Xamarin binding you are trying to use.  Check out our releases for the latest.
 
-**Latest Framework: https://packages.namiml.com/NamiSDK/Xamarin/1.2.7/Nami.framework.zip
+**Latest Framework: https://packages.namiml.com/NamiSDK/Xamarin/1.2.7/Nami.framework.zip**
 
 Save the zip file to the root of this repository and then unzip it.
 
