@@ -8,7 +8,7 @@ Head over to the [Issues](https://github.com/namiml/nami-xamarin/issues) list to
 
 Please feel free to contribute to the project by opening any new issues and creating pull requests with any proposed fixes!
 
-Any accepted PRs will receive one 6 month period free of our Pro plan per organization on the Nami Platform.
+Any accepted PRs will receive one 6 month period free of our Pro plan for one organization on the Nami Platform (limit one per organization).
 
 --- 
 
