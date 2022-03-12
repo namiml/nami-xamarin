@@ -5,6 +5,10 @@
 
 *.DS_Store
 
+*Nami.framework*
+*Nami.xcframework
+*aar
+
 # User-specific files
 *.rsuser
 *.suo
